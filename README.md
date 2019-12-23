@@ -9,7 +9,7 @@ sudo apt install update-manager-core
 
 lsb_release -a
 
-#2.Installing terraform to ubuntu 18.04
+##2.Installing terraform to ubuntu 18.04
 
 
 sudo apt-get install unzip
