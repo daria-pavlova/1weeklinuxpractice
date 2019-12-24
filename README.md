@@ -72,6 +72,12 @@ Allows people in group wheel to run all commands
   
  ## 7. To create systemd unit
   
+  Create *.service file the /etc/systemd/system
+  
+  ## 8. Installing LAMP
+  
+   sudo apt install apache2 & sudo apt install mysql-server& sudo apt install php7.2 libapache2-mod-php7.2 php-mysql
+  
   
   
   
