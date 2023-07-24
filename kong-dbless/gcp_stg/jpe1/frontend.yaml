@@ -1,0 +1,14 @@
+apiVersion: networking.gke.io/v1beta1
+kind: FrontendConfig
+metadata:
+  name: stg-rpay-kong
+  namespace: rpay-kong
+  labels:
+    app: stg-rpay-kong
+spec:
+  sslPolicy: gke-ingress-ssl-policy
+  # securityPolicy:
+  #   name: stg-stg-rpay-kong
+  redirectToHttps:
+    enabled: false
+  

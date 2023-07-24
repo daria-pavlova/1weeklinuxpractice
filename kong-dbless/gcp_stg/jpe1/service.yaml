@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: stg-rpay-kong
+  namespace: rpay-kong
+  labels:
+    app: stg-rpay-kong
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
+    cloud.google.com/app-protocols: '{"http": "HTTP"}'
+    cloud.google.com/backend-config: '{"ports": {"8000":"stg-rpay-kong"}}'
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8000
+    targetPort: 8000
+    protocol: TCP
+    name: http
+  selector:
+    app: stg-rpay-kong
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    networking.gke.io/load-balancer-type: Internal
+  labels:
+    app: stg-rpay-kong
+  name: "stg-rpay-kong-internal"
+  namespace: rpay-kong
+spec:
+  ports:
+  - name: http
+    port: 8000
+    protocol: TCP
+    targetPort: 8000
+  selector:
+    app: stg-rpay-kong
+  sessionAffinity: None
+  type: LoadBalancer

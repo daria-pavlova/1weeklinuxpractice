@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: stg-rpay-kong
+  namespace: rpay-kong
+  labels:
+    app: stg-rpay-kong
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.global-static-ip-name: "stg-rpay-kong-gateway-lb-ip-01"
+    networking.gke.io/v1beta1.FrontendConfig: stg-rpay-kong
+    ingress.gcp.kubernetes.io/pre-shared-cert: "star-pay-rakuten-co-jp-jun-25-2024"
+    kubernetes.io/ingress.allow-http: "false"
+spec:
+  rules:
+  - host: stg-api-gateway-001.pay.rakuten.co.jp
+    http:
+      paths:
+      - backend:
+          service:
+            name: stg-rpay-kong
+            port:
+              number: 8000
+        path: /*
+        pathType: ImplementationSpecific
