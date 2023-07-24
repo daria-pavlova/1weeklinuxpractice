@@ -1,0 +1,12 @@
+nohup: ignoring input
+Starting server on port 18000...
+Traceback (most recent call last):
+  File "server2.py", line 44, in <module>
+    run()
+  File "server2.py", line 40, in run
+    httpd.serve_forever()
+  File "/usr/lib/python3.8/socketserver.py", line 232, in serve_forever
+    ready = selector.select(poll_interval)
+  File "/usr/lib/python3.8/selectors.py", line 415, in select
+    fd_event_list = self._selector.poll(timeout)
+KeyboardInterrupt
