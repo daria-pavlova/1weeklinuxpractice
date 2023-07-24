@@ -1,0 +1,63 @@
+_format_version: "2.1"
+_transform: true
+plugins:
+  - name: prometheus
+    config:
+      per_consumer: true
+      status_code_metrics: true
+      latency_metrics: true
+      bandwidth_metrics: true
+      upstream_health_metrics: true
+services:
+  - id: 4BD3CA25-C157-4B57-8BD3-E46568305958
+    name: status_service 
+    url: http://localhost:8100/status
+    routes:
+      - id: 7B82E961-12FF-42D7-8A19-3C58DFBEEC6F
+        name: status_route
+        paths:
+          - /V1hwT1UyRkhVa2xXYm05TENnPT0K/status
+        strip_path: true
+        preserve_host: false
+  - id: EE76C9CA-081C-4740-8427-BA789FE27749
+    name: localizedmyna-v1-payment-user-validation-service
+    url: http://shopper-v6-stg-8080-rpay-dev-stg.jpe2-caas1-dev1.caas.jpe2b.r-local.net/api/localizedMynumberPoint/mkpf/payment_user_id_validation
+    host: shopper-v6-stg-8080-rpay-dev-stg.jpe2-caas1-dev1.caas.jpe2b.r-local.net
+    routes:
+      - id: 3BAD46E2-AF5A-4F22-9719-C2582B3085B0
+        name: localizedmyna-v1-payment-user-validation-route
+        paths:
+          - /localizedmyna/v1/payment_user_id_validation
+        protocols:
+          - http
+          - https
+        strip_path: true
+        preserve_host: false
+  - id: 05FC68B0-21E4-4191-9BEB-8FD108827C2C
+    name: localizedmyna-v2-points-service
+    url: http://shopper-v6-stg-8080-rpay-dev-stg.jpe2-caas1-dev1.caas.jpe2b.r-local.net/api/localizedMynumberPoint/v2/points
+    host: shopper-v6-stg-8080-rpay-dev-stg.jpe2-caas1-dev1.caas.jpe2b.r-local.net
+    routes:
+      - id: A7936247-69B5-4EDD-8D4F-82477E8B5562
+        name: localizedmyna-v2-points-route
+        paths:
+          - /localizedmyna/v2/points
+        protocols:
+          - http
+          - https
+        strip_path: true
+        preserve_host: false
+  - id: B1C6C3C9-B775-4B63-AF4E-3E99A0F4333F
+    name: localizedmyna-v2-points-cancel-service
+    url: http://shopper-v6-stg-8080-rpay-dev-stg.jpe2-caas1-dev1.caas.jpe2b.r-local.net/api/localizedMynumberPoint/v2/points/cancel
+    host: shopper-v6-stg-8080-rpay-dev-stg.jpe2-caas1-dev1.caas.jpe2b.r-local.net
+    routes:
+      - id: 52ACF63C-D394-4B3F-B0F1-A50EE7EAD8B8
+        name: localizedmyna-v2-points-cancel-route
+        paths:
+          - /localizedmyna/v2/points/cancel
+        protocols:
+          - http
+          - https
+        strip_path: true
+        preserve_host: false

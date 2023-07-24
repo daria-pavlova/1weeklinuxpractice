@@ -1,0 +1,14 @@
+# svc for port 3000
+# Path: gcp/stg/jpe/caas/metric-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: ${ENV}-metric-svc
+  namespace: rpay-kong
+spec:
+  ports:
+  - port: 3000
+    protocol: TCP
+    targetPort: 8001
+  selector:
+    app: "${DEPLOYMENT_NAME}"

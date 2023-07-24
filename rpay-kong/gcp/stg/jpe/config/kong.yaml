@@ -1,0 +1,5174 @@
+_format_version: '2.1'
+_transform: true
+plugins:
+-   name: prometheus
+    config:
+        per_consumer: false
+        status_code_metrics: true
+        latency_metrics: true
+        bandwidth_metrics: true
+        upstream_health_metrics: true
+services:
+-   url: http://localhost:8100/status
+    name: status_service
+    routes:
+    -   name: status_route
+        paths:
+        - /V1hwT1UyRkhVa2xXYm05TENnPT0K/status
+-   id: aa9c5fde-8ace-49b3-aaa0-e41462a429ab
+    url: http://my-server-service:18000 
+    name: example_service
+    routes:
+    -   id: ed98f70a-4ca4-4a4c-8478-c95513f3c6ab
+        name: example_route
+        paths:
+        - /headertest
+-   id: aa9c5fde-8ace-49b3-aaa0-e41462a42942
+    name: rpay_mdn_external_reserve_qa
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://rpay-merchant-router-443-rpay-dev-qa.jpe2-caas1-dev1.caas.jpe2b.r-local.net/api/external/payment/reserve
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: ed98f70a-4ca4-4a4c-8478-c95513f3c6ad
+        name: rpay_mdn_external_reserve_qa
+        paths:
+        - /Mdn/qa/api/external/payment/reserve
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 8999d7a8-11f4-4ed7-9a71-05fd1ddf8101
+    name: mdn_cokeon_history
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://rpay-mdn-stg-history-api.gslb.dcnw.rakuten/api/cokeon/payment/history
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: a76a9871-c216-400f-bbb7-e8a077cb4cf6
+        name: man_cokeon_payment_history_route
+        paths:
+        - /mdn/api/cokeon/payment/history
+        methods: null
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 41047973-d7b0-41c2-a732-a3e87ade0eeb
+    name: pay_add_stg_necfm_paymenthistory
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://canary-api-shopper.pay.r-local.net/pay/RWallet/paymenthistory
+    retries: 3
+    connect_timeout: 15000
+    write_timeout: 15000
+    read_timeout: 15000
+    tags: null
+    routes: []
+-   id: 00968156-dfc2-4879-a5eb-976167d0e1eb
+    name: pay_add_stg_general_paymenthistory
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://canary-api-shopper.pay.r-local.net/pay/RWallet/paymenthistory
+    retries: 3
+    connect_timeout: 15000
+    write_timeout: 15000
+    read_timeout: 15000
+    tags: null
+    routes: []
+-   id: 5dd8b5f8-ce17-4961-af09-fcfd12886d75
+    name: mdn_barcode_payment_history
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://rpay-mdn-stg-history-api.gslb.dcnw.rakuten:21980/api/payment/history
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: 2df86683-5381-4d65-a8bd-0d4d046d3023
+        name: mdn_barcode_payment_history_route
+        paths:
+        - /mdn/api/payment/history
+        methods: null
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                remove:
+                    querystring: []
+                    headers: []
+                    body: []
+                add:
+                    querystring: []
+                    headers:
+                    - 'x-auth-token: YUhSMGNDMXlaWEYxWlhOMElHRmtaQzFvWldGa1pYSWdlQzFoZFhSb0xYUnZhMlZ1'
+                    body: []
+                http_method: null
+                append:
+                    querystring: []
+                    headers: []
+                    body: []
+                replace:
+                    querystring: []
+                    headers: []
+                    body: []
+                    uri: null
+                rename:
+                    querystring: []
+                    headers: []
+                    body: []
+            id: 20011fcc-bbee-4ae9-835e-ffaca5121577
+            enabled: false
+            name: request-transformer
+-   id: 82a235a3-571b-4728-b311-3978e2e922fd
+    name: mdn_cmnqr_payment_history
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://rpay-mdn-stg-history-api.gslb.dcnw.rakuten/api/cmnqr/payment/history
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: 881f55fd-0c0f-4eef-b280-4bd6bdab6129
+        name: mdn_cmnqr_payment_history_route
+        paths:
+        - /mdn/api/cmnqr/payment/history
+        methods: null
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: a837730c-a70d-421f-9852-8818e3922ea2
+    name: dev_router_cokeon_token_invalidate
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://dev-merchant-router-payment.intra.rakuten-it.com/api/token/invalidate
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: 930c6989-bff7-4843-ad3a-532c004347e3
+        name: dev_router_cokeon_token_invalidate
+        paths:
+        - /Mdn/api/token/invalidate
+        methods:
+        - DELETE
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 97ea6206-d01a-4ba5-b20f-0e1a11a86991
+    name: dev_router_cokeon_payment_cancel
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://dev-merchant-router-payment.intra.rakuten-it.com/api/coke-on/payment/cancel
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: b03fd10f-68fc-405d-9991-0f28eb7f0b1e
+        name: dev_router_cokeon_payment_cancel
+        paths:
+        - /Mdn/api/coke-on/payment/cancel
+        methods:
+        - DELETE
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: d15cf686-e84b-43e6-97d2-d5ba38d9d6e5
+    name: dev_router_cokeon_payment_set
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://dev-merchant-router-payment.intra.rakuten-it.com/api/coke-on/payment/set
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: 5575e031-d6f9-418b-ac98-8750820d8965
+        name: dev_router_cokeon_payment_set
+        paths:
+        - /Mdn/api/coke-on/payment/set
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 5e475bbb-e654-4e52-b414-9aac091bd605
+    name: dev_router_cokeon_token_refresh
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://dev-merchant-router-payment.intra.rakuten-it.com/api/token/refresh
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: e79eb17b-467c-4032-b624-b8f59c8b871c
+        name: dev_router_cokeon_token_refresh
+        paths:
+        - /Mdn/api/token/refresh
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 24d47287-f870-4360-8995-e78d229da18c
+    name: dev_router_cokeon_token_get
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://dev-merchant-router-payment.intra.rakuten-it.com/api/token/get
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: baf11949-c537-4401-8c4b-03d665643441
+        name: dev_router_cokeon_token_get
+        paths:
+        - /Mdn/api/token/get
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: abf859e7-b8ed-4783-aa93-f817ad2995bf
+    name: dev_router_au_payment_update
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://dev-merchant-router-payment.intra.rakuten-it.com/api/payment/update
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: 235b6b7b-6230-4b0a-9669-8308cf89a1fe
+        name: dev_router_au_payment_update
+        paths:
+        - /api/payment/update
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 3b4742ff-4648-4bbd-a36e-273433eb34d0
+    name: dev_router_au_payment_request
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://dev-merchant-router-payment.intra.rakuten-it.com/api/payment/request
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: f57efefe-530a-46a7-a1a8-8d48459aa29e
+        name: dev_router_au_payment_request
+        paths:
+        - /api/payment/request
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: ec210938-e843-4a9b-8b21-6f1bf4e5f802
+    name: dev_merchant_router_payment_get
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://lb-100-96-126-230.lbaas.jpw1a.dcnw.rakuten/api/payment/get
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: 63ff03ad-1d9f-4c12-8e66-c2ffe5389c9f
+        name: dev_merchant_router_payment_get
+        paths:
+        - /api/payment/get
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 6637c160-d404-4238-bbf7-a9a47f63e831
+    name: dev_merchant_router_payment_set
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://lb-100-96-126-230.lbaas.jpw1a.dcnw.rakuten/api/payment/set
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: 8f302088-4c11-4e6e-ac73-fa99f3736883
+        name: dev_router_payment_set
+        paths:
+        - /api/payment/set
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: fcda554e-dd08-4279-8a82-361d26fb19aa
+    name: pay_unbreakable_aupay_requestPayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://merchant-router-payment.intra.rakuten-it.com/api/payment/request
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes: []
+-   id: 000f13e5-7665-44a8-b783-2bfd8a35473a
+    name: pay_unbreakable_aupay_updatePayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://merchant-router-payment.intra.rakuten-it.com/api/payment/update
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes: []
+-   id: 2b70cc4c-ed36-443c-a4d5-c5529cf2c3b8
+    name: pay_unbreakable_cmnqr_cancel
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://merchant-router-payment.intra.rakuten-it.com/api/cmnqr/payment/cancel
+    retries: 2
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 20000
+    tags: null
+    routes: []
+-   id: 8182dc71-8a9c-436f-bad6-d63e27aca5fa
+    name: pay_unbreakable_cmnqr_get
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://merchant-router-payment.intra.rakuten-it.com/api/cmnqr/payment/get
+    retries: 2
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 20000
+    tags: null
+    routes: []
+-   id: 1e6b7cdf-baee-4a5a-8066-db802ca09083
+    name: pay_unbreakable_cmnqr_reserve
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://merchant-router-payment.intra.rakuten-it.com/api/cmnqr/payment/reserve
+    retries: 2
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 20000
+    tags: null
+    routes: []
+-   id: efbf9a05-e24e-49e1-9f56-3d8c274488de
+    name: offline_barcode_check
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://rpay-offline-api-8080-rpay-dev-analytics.jpe2-caas1-dev1.caas.jpe2b.r-local.net/api/offlineBarcode/check
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: 1be6a8e4-3ced-4806-8eb3-a2908f235cbc
+        name: offline_barcode_check
+        paths:
+        - /api/offlineBarcode/check
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 953cd1a8-cee8-4404-816c-609a56c698ba
+    name: offline_barcode_generate
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://rpay-offline-api-8080-rpay-dev-analytics.jpe2-caas1-dev1.caas.jpe2b.r-local.net/api/offlineBarcode/generate
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: 3b0f3d10-a8a4-492e-b795-a727fb36be29
+        name: offline_barcode_generate
+        paths:
+        - /api/offlineBarcode/generate
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: f7f17bdc-6840-4f23-b08f-0cba37b463d1
+    name: stg_merchant_router_gcp_payment_cancel
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://stg-merchant-router-grp01.pay.rakuten.co.jp/api/payment/cancel
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: 2e87eefe-f98b-43d9-841d-3c84bdd70392
+        name: stg_merchant_router_gcp_payment_cancel
+        paths:
+        - /UNBREAKABLE/api/payment/cancel
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 3600c8d8-dae6-463e-9908-f7ba74c0be6a
+    name: stg_merchant_router_gcp_payment_get
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://stg-merchant-router-grp01.pay.rakuten.co.jp/api/payment/get
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: a29e6a7c-662c-4e02-ac0b-329701d1d684
+        name: stg_merchant_router_gcp_payment_get
+        paths:
+        - /UNBREAKABLE/api/payment/get
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 08ab6e84-14d7-4570-8fc8-06032fab1fc3
+    name: stg_merchant_router_gcp_payment_set
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://stg-merchant-router-grp01.pay.rakuten.co.jp/api/payment/set
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: 108aa618-1d62-420c-890d-6584ef87a986
+        name: stg_merchant_router_gcp_payment_set
+        paths:
+        - /UNBREAKABLE/api/payment/set
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 5e7d44ca-4459-44b0-82c0-29a0fa13e7f5
+    name: pay_general_cmnqr_history
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-general.sandbox.prod.jp.local:23580/api/cmnqr/payment/history
+    retries: 2
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 25000
+    tags: null
+    routes:
+    -   id: 610474f8-58e5-4b76-a1ff-e42a1c7ebbb4
+        name: pay_takeme_cmnqr-history
+        paths:
+        - /TAKEME/[0-9a-zA-Z_-]+/api/cmnqr/payment/history
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 3cefed78-dc26-4fd4-8640-7748b081330d
+    name: pay_general_cmnqr_cancel
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-general.sandbox.prod.jp.local:23580/api/cmnqr/payment/cancel
+    retries: 2
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 20000
+    tags: null
+    routes:
+    -   id: 0511ac0d-8cb8-4142-bd40-edcd9aec732d
+        name: pay_takeme_cmnqr-cancel
+        paths:
+        - /TAKEME/[0-9a-zA-Z_-]+/api/cmnqr/payment/cancel
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: d4cee097-bd87-4933-9efb-aa59c7468a1e
+    name: pay_general_cmnqr_get
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-general.sandbox.prod.jp.local:23580/api/cmnqr/payment/get
+    retries: 2
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 20000
+    tags: null
+    routes:
+    -   id: 5999cd83-68fc-4fc1-a82a-11f7ebc82237
+        name: pay_takeme_cmnqr-get
+        paths:
+        - /TAKEME/[0-9a-zA-Z_-]+/api/cmnqr/payment/get
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: d77627d1-2024-446a-9b8a-56584a47956b
+    name: pay_general_cmnqr_reserve
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-general.sandbox.prod.jp.local:23580/api/cmnqr/payment/reserve
+    retries: 2
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 20000
+    tags: null
+    routes:
+    -   id: 1a3c5813-4ae6-4a5c-a66a-d74663c60991
+        name: pay_istarix_external-payment-reserve
+        paths:
+        - /ISTARIX/[0-9a-zA-Z_-]+/api/external/payment/reserve
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 9588b0d3-47f7-4553-aa82-bd152eefd955
+    name: pay_incomjp_unbreakable_external_history
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://rpay-merchant-router-incomm.gslb.dcnw.rakuten:21580/api/external/payment/history
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 25000
+    tags: null
+    routes: []
+-   id: 700d004b-8b28-4bed-911e-fda1ad5c277b
+    name: pay_incomjp_unbreakable_external_cancelPayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://rpay-merchant-router-incomm.gslb.dcnw.rakuten:21580/api/external/payment/cancel
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 25000
+    tags: null
+    routes: []
+-   id: 51f79e85-5a6a-4bbe-a8be-4bc9bbe8a56b
+    name: pay_incomjp_unbreakable_external_reservePayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://rpay-merchant-router-incomm.gslb.dcnw.rakuten:21580/api/external/payment/reserve
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes: []
+-   id: eeaf246f-f3b9-4db4-be70-889548fff018
+    name: pay_incomjp_unbreakable_external_abortPayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://rpay-merchant-router-incomm.gslb.dcnw.rakuten:21580/api/external/payment/abort
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes: []
+-   id: 11e8dab4-3d5c-4795-bba0-c69b3c4b3108
+    name: pay_incomjp_unbreakable_external_getPayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://rpay-merchant-router-incomm.gslb.dcnw.rakuten:21580/api/external/payment/get
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes: []
+-   id: c2caa28d-8428-4a59-8430-569a3a5ae00c
+    name: pay_incomjp_external_history
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-incomjp.sandbox.prod.jp.local:21580/api/external/payment/history
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 25000
+    tags: null
+    routes: []
+-   id: cf6282d0-7ece-4c80-ae51-13069b9c8620
+    name: pay_incomjp_external_cancelPayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-incomjp.sandbox.prod.jp.local:21580/api/external/payment/cancel
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 25000
+    tags: null
+    routes: []
+-   id: 8e2e270e-c7e2-4fea-affe-7c25bc4fa33c
+    name: pay_incomjp_external_abortPayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-incomjp.sandbox.prod.jp.local:21580/api/external/payment/abort
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes: []
+-   id: 52ef3beb-1b01-4855-9f78-d68f83d04716
+    name: pay_incomjp_external_reservePayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-incomjp.sandbox.prod.jp.local:21580/api/external/payment/reserve
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes: []
+-   id: 5453f3e8-be6f-4b2a-81b1-a5447b3c6f76
+    name: pay_incomjp_external_getPayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-incomjp.sandbox.prod.jp.local:21580/api/external/payment/get
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes: []
+-   id: aefd90cc-629c-4f49-86d0-81b8b30fcc7d
+    name: pay_nstars_cmnqr_history
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-nstars.sandbox.prod.jp.local:21580/api/cmnqr/payment/history
+    retries: 2
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 25000
+    tags: null
+    routes:
+    -   id: 4c06bc2f-96e2-4b77-923d-d66a5362ef71
+        name: pay_nstars_cmnqr-history
+        paths:
+        - /NETSTARS/[0-9a-zA-Z_-]+/api/cmnqr/payment/history
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: f50bef15-9d7c-4d1c-8af5-07941a7d57d5
+    name: pay_nstars_cmnqr_cancel
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-nstars.sandbox.prod.jp.local:21580/api/cmnqr/payment/cancel
+    retries: 2
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 20000
+    tags: null
+    routes:
+    -   id: d87bfcd4-a1bb-4fe4-8475-61b95562c639
+        name: pay_nstars_cmnqr-cancel
+        paths:
+        - /NETSTARS/[0-9a-zA-Z_-]+/api/cmnqr/payment/cancel
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: a1ec4c21-5a0b-4c62-8e36-f2545c6f6791
+    name: pay_nstars_cmnqr_get
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-nstars.sandbox.prod.jp.local:21580/api/cmnqr/payment/get
+    retries: 2
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 20000
+    tags: null
+    routes:
+    -   id: b94f0b79-86c3-4a2f-823b-451752faf7d4
+        name: pay_nstars_cmnqr-get
+        paths:
+        - /NETSTARS/[0-9a-zA-Z_-]+/api/cmnqr/payment/get
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 98cb3c70-7154-4393-a88d-1782c658eab5
+    name: pay_nstars_cmnqr_reserve
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-nstars.sandbox.prod.jp.local:21580/api/cmnqr/payment/reserve
+    retries: 2
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 20000
+    tags: null
+    routes:
+    -   id: cce45977-7d78-487f-9619-be8b77ccd25f
+        name: pay_nstars_cmnqr-reserve
+        paths:
+        - /NETSTARS/[0-9a-zA-Z_-]+/api/cmnqr/payment/reserve
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: a7d02b80-c636-423d-8cfc-9df6a66a2510
+    name: qa_merchant_router_cmnqr_cancel
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://qa-merchant-router-payment.intra.rakuten-it.com/api/cmnqr/payment/cancel
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: d26efcc3-2bfa-4608-a418-ca89864e34cc
+        name: qa_merchant_router_cmnqr_cancel
+        paths:
+        - /Mdn/api/cmnqr/payment/cancel
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 31af1c46-7e43-43c4-b59c-b6f92d38c5ef
+    name: qa_merchant_router_cmnqr_get
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://qa-merchant-router-payment.intra.rakuten-it.com/api/cmnqr/payment/get
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: 673d13b5-8afc-40c0-8cd8-6020a3e5fc2c
+        name: qa_merchant_router_cmnqr_get
+        paths:
+        - /Mdn/api/cmnqr/payment/get
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 50dc505f-ee00-460e-824d-eec219de23a3
+    name: qa_merchant_router_cmnqr_reserve
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://qa-merchant-router-payment.intra.rakuten-it.com/api/cmnqr/payment/reserve
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: fde289cc-b1e4-4302-a690-6bfe5d71c2f6
+        name: qa_merchant_router_cmnqr_reserve
+        paths:
+        - /Mdn/api/cmnqr/payment/reserve
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 562fe001-8af9-4b7f-9070-a3340e378c6d
+    name: external_payment_history_qa_merchant_router
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://rpay-mdn-stg-history-api.gslb.dcnw.rakuten:21980/api/external/payment/history
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: d90350af-e812-4e93-bbda-24ba8a4eae2e
+        name: external_payment_history_merchant_router_qa
+        paths:
+        - /mdn/api/external/payment/history
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: a39ed64d-c955-421d-a96d-7d030d5ce2bc
+    name: pay_unbreakable_external_cancelPayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://merchant-router-payment.intra.rakuten-it.com/api/external/payment/cancel
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 25000
+    tags: null
+    routes:
+    -   id: 765374b0-70ee-400a-8f8e-3ae87d8d135e
+        name: pay_incomjp_external-payment-cancel
+        paths:
+        - /INCOMJP/[0-9a-zA-Z_-]+/api/external/payment/cancel
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: af25e300-13cd-40e6-9950-29856784d508
+    name: pay_unbreakable_external_getPayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://merchant-router-payment.intra.rakuten-it.com/api/external/payment/get
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes:
+    -   id: 21f78f68-ba62-4790-86a5-d456ae021dcc
+        name: pay_incomjp_external-payment-get
+        paths:
+        - /INCOMJP/[0-9a-zA-Z_-]+/api/external/payment/get
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 26f25f5f-c127-493d-bb7c-250013aaf550
+    name: pay_unbreakable_external_abortpayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://merchant-router-payment.intra.rakuten-it.com/api/external/payment/abort
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes:
+    -   id: 70cd83f4-174f-4765-97e2-700fac3c19f1
+        name: pay_incomjp_external-payment-abort
+        paths:
+        - /INCOMJP/[0-9a-zA-Z_-]+/api/external/payment/abort
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 43e0d6d0-08a8-4528-be37-fb224b921588
+    name: pay_unbreakable_external_reservePayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://merchant-router-payment.intra.rakuten-it.com/api/external/payment/reserve
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes:
+    -   id: 56126961-07f1-48b4-bce2-970c34095344
+        name: pay_incomjp_external-payment-reserve
+        paths:
+        - /INCOMJP/[0-9a-zA-Z_-]+/api/external/payment/reserve
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 1a573dd7-e445-4ced-bd50-238adadd06c5
+    name: Test_security_audit_jira
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://mockbin.com/path/to/api
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes: []
+-   id: 8d424c38-2130-4aa2-b516-b3e5277d02c1
+    name: qamerchant_router_shopper_cmnqr_set
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://qa-api-shopper.pay.rakuten.co.jp/pay/RWallet/ShopperCommonQrPaymentSet
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: 2d6123b3-d546-411d-a40b-51704e36c8e5
+        name: qamerchant_router_cmnqr_shopper_payment_set
+        paths:
+        - /RWallet/ShopperCommonQrPaymentSet
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: d12b11b8-6f4e-43b4-93e0-0b446e6d9df0
+    name: qamerchant_router_shopper_cmnqr_get
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://qa-api-shopper.pay.rakuten.co.jp/pay/RWallet/ShopperCommonQrPaymentGet
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: b531ffa4-3443-4195-9f44-9a6f1ead717c
+        name: qamerchant_router_cmnqr_shopper_payment_get
+        paths:
+        - /RWallet/ShopperCommonQrPaymentGet
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 875aecdb-4810-43a4-b614-2477ecf11d1b
+    name: test_external_cancelpayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://stg-test-merchant-router-payment.intra.rakuten-it.com/api/external/payment/cancel
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 25000
+    tags: null
+    routes:
+    -   id: a478e607-6064-4ce1-ba55-451315cedeca
+        name: Test_for_api_specification_doc
+        paths:
+        - /test/api/external/payment/cancel
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 2c8d8c56-7158-47e3-a37a-47810078b316
+    name: test_external_getpayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://stg-test-merchant-router-payment.intra.rakuten-it.com/api/external/payment/get
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 25000
+    tags: null
+    routes: []
+-   id: 9148360f-ced1-49a8-8c85-77de9991f712
+    name: test_external_abortpayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://stg-test-merchant-router-payment.intra.rakuten-it.com/api/external/payment/abort
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes: []
+-   id: a38c6fd6-a3f1-45b9-b4ce-5f04e4037ddd
+    name: test_external_reservepayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://stg-test-merchant-router-payment.intra.rakuten-it.com/api/external/payment/reserve
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes: []
+-   id: e3e0d3a2-af90-4b1e-83c6-c6652ba0cca4
+    name: test_ext_cancelpayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://stg-test-merchant-router-payment.intra.rakuten-it.com/api/external/payment/cancel
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 25000
+    tags: null
+    routes:
+    -   id: f0f5166e-7eb7-4fb4-9111-e7d76057a944
+        name: test_ext_route_cancelpayment
+        paths:
+        - /api/external/payment/cancel
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: acde35cd-3ad4-4ed4-b503-ef170dc42d8d
+    name: test_ext_getpayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://stg-test-merchant-router-payment.intra.rakuten-it.com/api/external/payment/get
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 25000
+    tags: null
+    routes:
+    -   id: e20a8b46-7b24-45b7-a1a7-3ed6f9e43b7f
+        name: test_ext_route_getpayment
+        paths:
+        - /api/external/payment/get
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 39130b45-2c3a-4a2e-a7b3-a9c7f8a65b4e
+    name: test_ext_abortpayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://stg-test-merchant-router-payment.intra.rakuten-it.com/api/external/payment/abort
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes:
+    -   id: abba217c-d719-4462-b2e2-03bb794dd39b
+        name: test_ext_route_abortpayment
+        paths:
+        - /api/external/payment/abort
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 0fc797fd-de72-4575-a83b-25d8f60ee2a7
+    name: test_ext_reservepayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://stg-test-merchant-router-payment.intra.rakuten-it.com/api/external/payment/reserve
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes:
+    -   id: ed706417-1407-4719-ba9b-c4c7222bdc6d
+        name: test_ext_route_reservepayment
+        paths:
+        - /api/external/payment/reserve
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 114534bc-e0c5-425a-a1a6-d10cf8cb42c5
+    name: external_payment_cancel
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://dev-merchant-router-payment.intra.rakuten-it.com/api/external/payment/cancel
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: f08fa32e-e112-4d77-8903-7500e8126159
+        name: external_payment_cancel_dev_merchant_router
+        paths:
+        - /api/external/payment/cancel
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 6f4e2cb5-71a4-45cf-be3c-4cc2c8976188
+    name: external_payment_get
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://dev-merchant-router-payment.intra.rakuten-it.com/api/external/payment/get
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: 3b6b99e1-5e4a-41d7-8cf3-6df835c4bf9e
+        name: external_payment_get_dev_merchant_router
+        paths:
+        - /api/external/payment/get
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 679f078d-5881-4040-a54c-cfc1da510156
+    name: external_payment_abort
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://dev-merchant-router-payment.intra.rakuten-it.com/api/external/payment/abort
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: ed3e6335-5f6c-4833-83ea-ec66a934496d
+        name: external_payment_abort_dev_merchant_router
+        paths:
+        - /api/external/payment/abort
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: ba7ca2da-8ffa-4e16-96c2-d9b53a4368ab
+    name: external_payment_reserve
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://dev-merchant-router-payment.intra.rakuten-it.com/api/external/payment/reserve
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: 22e8d8d9-6c17-4e92-9e30-e5204e90af0d
+        name: external_payment_reserve_router_review
+        paths:
+        - /api/external/payment/reserve
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 4a9f9753-5b14-434f-870f-caec2783c607
+    name: jaas_reserve_payment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://lb-100-87-130-122.lbaas.jpe2b.dcnw.rakuten/api/external/payment/pre-auth/reserve
+    retries: 2
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 20000
+    tags: null
+    routes: []
+-   id: 0be286c2-2fa6-43b6-8e65-dff0f43b9078
+    name: jass_external_payment_preauth_history
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://lb-100-87-130-122.lbaas.jpe2b.dcnw.rakuten/api/external/payment/pre-auth/history
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: ea88961d-d103-442c-b0ae-e5127bbad61e
+        name: jass_external_payment_history_dev_merchant_router
+        paths:
+        - /RPayStg_NETSTARS/NETSTARS_PR/api/external/payment/pre-auth/history
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 5bcc7224-2e5b-45c1-9443-e4e6870f8ecc
+    name: jass_external_payment_preauth_get_inquiry
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://lb-100-87-130-122.lbaas.jpe2b.dcnw.rakuten/api/external/payment/pre-auth/get
+    retries: 2
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 20000
+    tags: null
+    routes:
+    -   id: 3b451df6-dd47-461a-bc92-009f981ab85f
+        name: jass_external_payment_preauth_get_dev_merchant_router
+        paths:
+        - /RPayStg_NETSTARS/NETSTARS_PR/api/external/payment/pre-auth/get
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                remove:
+                    querystring: []
+                    headers: []
+                    body: []
+                add:
+                    querystring: []
+                    headers:
+                    - 'x-auth-token: YUhSMGNDMXlaWEYxWlhOMElHRmtaQzFvWldGa1pYSWdlQzFoZFhSb0xYUnZhMlZ1'
+                    body: []
+                http_method: null
+                append:
+                    querystring: []
+                    headers: []
+                    body: []
+                replace:
+                    querystring: []
+                    headers: []
+                    body: []
+                    uri: null
+                rename:
+                    querystring: []
+                    headers: []
+                    body: []
+            id: 4065a148-9ed6-4c57-b799-08f91b7fb86b
+            enabled: true
+            name: request-transformer
+        -   config:
+                key_in_body: false
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_names:
+                - RPay-GatewayCode
+            id: d203937f-d580-4220-a830-e85e69b54d17
+            enabled: true
+            name: key-auth
+-   id: 2d62b23d-0c58-4ecb-a08c-068deb692031
+    name: jass_external_payment_abort_cancel
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://lb-100-87-130-122.lbaas.jpe2b.dcnw.rakuten/api/external/payment/pre-auth/abort-and-cancel
+    retries: 2
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 20000
+    tags: null
+    routes:
+    -   id: b01edfa7-1605-4cce-99e5-501892914007
+        name: jass_external_payment_abort_and_cancel_dev_merchant_router
+        paths:
+        - /RPayStg_NETSTARS/NETSTARS_PR/api/external/payment/pre-auth/abort-and-cancel
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                remove:
+                    querystring: []
+                    headers: []
+                    body: []
+                add:
+                    querystring: []
+                    headers:
+                    - 'x-auth-token: YUhSMGNDMXlaWEYxWlhOMElHRmtaQzFvWldGa1pYSWdlQzFoZFhSb0xYUnZhMlZ1'
+                    body: []
+                http_method: null
+                append:
+                    querystring: []
+                    headers: []
+                    body: []
+                replace:
+                    querystring: []
+                    headers: []
+                    body: []
+                    uri: null
+                rename:
+                    querystring: []
+                    headers: []
+                    body: []
+            id: d8f81b29-244e-4d96-8a0b-e6014e964a82
+            enabled: true
+            name: request-transformer
+        -   config:
+                key_in_body: false
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_names:
+                - RPay-GatewayCode
+            id: 156e321a-8c50-4a9b-99e0-403222f71775
+            enabled: true
+            name: key-auth
+-   id: e40cd967-66dc-4f40-ad34-80d995415124
+    name: jaas_external_payment_amount_change_payment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://lb-100-87-130-122.lbaas.jpe2b.dcnw.rakuten/api/external/payment/pre-auth/set
+    retries: 2
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 25000
+    tags: null
+    routes:
+    -   id: 3f4a55ce-be4c-4a94-a49f-57603a8c86d5
+        name: jaas_external_payment_pre_auth_dev_merchant_router
+        paths:
+        - /RPayStg_NETSTARS/NETSTARS_PR/api/external/payment/pre-auth/set
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_in_body: false
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_names:
+                - RPay-GatewayCode
+            id: 4a45174a-d2ff-4568-b58a-7f62ab094c27
+            enabled: true
+            name: key-auth
+        -   config:
+                remove:
+                    querystring: []
+                    headers: []
+                    body: []
+                add:
+                    querystring: []
+                    headers:
+                    - 'x-auth-token: YUhSMGNDMXlaWEYxWlhOMElHRmtaQzFvWldGa1pYSWdlQzFoZFhSb0xYUnZhMlZ1'
+                    body: []
+                http_method: null
+                append:
+                    querystring: []
+                    headers: []
+                    body: []
+                replace:
+                    querystring: []
+                    headers: []
+                    body: []
+                    uri: null
+                rename:
+                    querystring: []
+                    headers: []
+                    body: []
+            id: b0940a24-d17c-4194-8bcd-48992e2d0963
+            enabled: true
+            name: request-transformer
+-   id: 6e73686a-dcc6-489b-b211-2bde6cf05d94
+    name: jaas_external_payment_reserve
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://lb-100-87-130-122.lbaas.jpe2b.dcnw.rakuten/api/external/payment/pre-auth/reserve
+    retries: 2
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 20000
+    tags: null
+    routes:
+    -   id: 422cfb4f-e527-4a93-90e1-8b4ff27c6bfe
+        name: external_payment_reserve_jass_dev_merchant_router
+        paths:
+        - /RPayStg_NETSTARS/NETSTARS_PR/api/external/payment/pre-auth/reserve
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 57ccc6ab-38e2-4da0-9f60-bd894bd64b05
+    name: pay_general_paymentcancel
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-general.sandbox.prod.jp.local:21580/api/payment/cancel
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: ef66013b-8b85-4c0a-afdb-a599b6c7e6c3
+        name: wrapper_test_gateway_barcode-payment-cancel
+        paths:
+        - /test_gateway/[0-9a-zA-Z_-]+/api/payment/cancel
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: false
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_in_body: false
+            id: 4616a72f-0d37-46b7-9d2d-b434bbae8d32
+            enabled: true
+            name: key-auth
+    -   id: 1dfaa240-f126-4ca6-b977-5b01a94a79ad
+        name: wrapper_yamaya_barcode-payment-cancel
+        paths:
+        - /YAMAYA/[0-9a-zA-Z_-]+/api/payment/cancel
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: false
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_in_body: false
+            id: 2fe24bc4-6cdf-4e42-bf4f-2acadab2e7ba
+            enabled: true
+            name: key-auth
+-   id: 4a8f7860-6ec3-4791-92dd-20d4ceae9eb8
+    name: pay_general_paymenthistory
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-general.sandbox.prod.jp.local:21580/api/payment/history
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: bf27f79b-ba72-4288-80c7-90372fbc0c03
+        name: wrapper_test_gateway_barcode-payment-history
+        paths:
+        - /test_gateway/[0-9a-zA-Z_-]+/api/payment/history
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: false
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_in_body: false
+            id: 625525d0-419d-4282-a0d4-ea0b373031a6
+            enabled: true
+            name: key-auth
+    -   id: d124acd4-594d-4ae7-bbce-ecaaa5891c9e
+        name: wrapper_yamaya_barcode-payment-history
+        paths:
+        - /YAMAYA/[0-9a-zA-Z_-]+/api/payment/history
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: false
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_in_body: false
+            id: 0f52323a-a533-4df6-86b0-95845c89c40a
+            enabled: true
+            name: key-auth
+-   id: aa215070-661e-4616-9e03-fbc36e5b2b96
+    name: pay_general_getpayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-general.sandbox.prod.jp.local:21580/api/payment/get
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: b3bfe213-d31a-49f8-aab2-238cb884d7f4
+        name: wrapper_test_gateway_barcode-payment-get
+        paths:
+        - /test_gateway/[0-9a-zA-Z_-]+/api/payment/get
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: false
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_in_body: false
+            id: 1edf1b72-785d-4c7a-8d0c-3166bea52c87
+            enabled: true
+            name: key-auth
+    -   id: 6aa7a3f0-0d60-4089-a21c-348e497e0286
+        name: wrapper_yamaya_barcode-payment-get
+        paths:
+        - /YAMAYA/[0-9a-zA-Z_-]+/api/payment/get
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: false
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_in_body: false
+            id: 8c72165c-bbac-4c32-9783-25ead7353085
+            enabled: true
+            name: key-auth
+-   id: f793a42d-57f6-4638-8f92-3fa9c1c889d1
+    name: pay_general_dopayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-general.sandbox.prod.jp.local:21580/api/payment/set
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: b73f2e45-6930-4081-b814-a1bda7a37337
+        name: wrapper_test_gateway_barcode-payment-set
+        paths:
+        - /test_gateway/[0-9a-zA-Z_-]+/api/payment/set
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: false
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_in_body: false
+            id: ce372183-800c-4fa9-b73d-c451c5efccc6
+            enabled: true
+            name: key-auth
+    -   id: b5f7843c-3f59-4adb-a1b3-2ff583692fb5
+        name: wrapper_yamaya_barcode-payment-set
+        paths:
+        - /YAMAYA/[0-9a-zA-Z_-]+/api/payment/set
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: false
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_in_body: false
+            id: e6adbcd9-3037-463e-a987-6654368615d5
+            enabled: true
+            name: key-auth
+-   id: 81ca7f49-ce0d-4664-8360-ae63c3b27018
+    name: pay_general_external_reservePayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-general.sandbox.prod.jp.local:21580/api/external/payment/reserve
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: ebcf4c8d-b105-468d-a76d-dfd135604c47
+        name: wrapper_istarix_test_external-payment-reserve
+        paths:
+        - /ISTARIX_test/[0-9a-zA-Z_-]+/api/external/payment/reserve
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: false
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_in_body: false
+            id: ab3444d4-65ca-4f7e-9d8e-9ede92aadc64
+            enabled: true
+            name: key-auth
+-   id: d8f9c61b-27da-43b5-9802-542cf591d558
+    name: pay_general_external_history
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-general.sandbox.prod.jp.local:21580/api/external/payment/history
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: ae60a74b-73ee-4393-88cc-b767e358413a
+        name: pay_incomjp_external-payment-history
+        paths:
+        - /INCOMJP/[0-9a-zA-Z_-]+/api/external/payment/history
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+    -   id: 3104e09a-8f01-492d-b409-9124bfd686c2
+        name: wrapper_istarix_test_external-payment-history
+        paths:
+        - /ISTARIX_test/[0-9a-zA-Z_-]+/api/external/payment/history
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: false
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_in_body: false
+            id: 86d4aea2-bb26-4696-b6f5-0af4d18a071b
+            enabled: true
+            name: key-auth
+-   id: f7d5fef9-331d-4054-98fd-a8bef5aba339
+    name: pay_general_external_abortpayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-general.sandbox.prod.jp.local:21580/api/external/payment/abort
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: c1c4170e-02f4-4ecd-acc9-b155a9325e4a
+        name: wrapper_istarix_test_external-payment-abort
+        paths:
+        - /ISTARIX_test/[0-9a-zA-Z_-]+/api/external/payment/abort
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: false
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_in_body: false
+            id: d42e62ec-e6a5-4082-aae1-803daa2a6ebd
+            enabled: true
+            name: key-auth
+-   id: d0fe6aec-00a5-449d-aa08-7a542ba293a1
+    name: pay_general_external_cancelPayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-general.sandbox.prod.jp.local:21580/api/external/payment/cancel
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: 8ee36635-722b-494c-b6dc-e1a40a0b1194
+        name: wrapper_istarix_test_external-payment-cancel
+        paths:
+        - /ISTARIX_test/[0-9a-zA-Z_-]+/api/external/payment/cancel
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: false
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_in_body: false
+            id: 578a6142-d7f6-4b5a-8a98-8bcda440d552
+            enabled: true
+            name: key-auth
+-   id: af9af198-a480-4d3e-8933-3e2ca3d6e213
+    name: pay_general_external_getPayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-general.sandbox.prod.jp.local:21580/api/external/payment/get
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: 902dce6a-3580-49e2-9e5a-dbc1364a455f
+        name: wrapper_istarix_test_external-payment-get
+        paths:
+        - /ISTARIX_test/[0-9a-zA-Z_-]+/api/external/payment/get
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: false
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_in_body: false
+            id: 18199169-030a-4bd6-a58f-cf2f60d15c70
+            enabled: true
+            name: key-auth
+-   id: 3dbcf1cb-4e7b-42d1-9a0f-55448959fe2b
+    name: pay_stg_canary_cancelpayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://stg-canary-merchant-router-payment.intra.rakuten-it.com/api/payment/cancel
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 25000
+    tags: null
+    routes: []
+-   id: 9d60a171-2d48-48e3-9e83-49cce9f54bd5
+    name: pay_stg_canary_getpayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://stg-canary-merchant-router-payment.intra.rakuten-it.com/api/payment/get
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes: []
+-   id: 05addab5-6d89-4ce4-a573-b7e98982991e
+    name: pay_stg_canary_dopayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://stg-canary-merchant-router-payment.intra.rakuten-it.com/api/payment/set
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes: []
+-   id: 9aa7eb31-bf5d-42f9-9788-8977fd000491
+    name: Test_wf_service_shared
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://100.73.10.91/api/shopper/inquiry
+    retries: 5
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 10000
+    tags: null
+    routes: []
+-   id: 1184014b-6fae-4311-94ab-aeb2f010d72a
+    name: pay_general_test_wrapperqr_history
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-cmnqr.sandbox.prod.jp.local/api/cmnqr/payment/history
+    retries: 3
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 25000
+    tags: null
+    routes:
+    -   id: b350358c-95f2-4513-bdea-abc6983b8b1f
+        name: pay_netstars_test_wrapperqr-history
+        paths:
+        - /NETSTARS/[0-9a-zA-Z_-]+/api/cmnqr/payment/history
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_in_body: false
+            id: d5dbe21a-3c78-49bf-8d35-d087df15ebed
+            enabled: true
+            name: key-auth
+        -   config:
+                echo_downstream: true
+                header_name: Kong-Request-ID
+                generator: uuid
+            id: 4f9dccbf-dad4-4346-85e3-6af3c0eca22e
+            enabled: true
+            name: correlation-id
+-   id: 78c9da83-87d1-4367-a35c-e8615ef96a85
+    name: pay_general_test_wrapperqr_cancel
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-cmnqr.sandbox.prod.jp.local/api/cmnqr/payment/cancel
+    retries: 3
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 10000
+    tags: null
+    routes:
+    -   id: cb3c444a-6d9c-4403-9836-af3f9bda090d
+        name: pay_netstars_test_wrapperqr-cancel
+        paths:
+        - /NETSTARS/[0-9a-zA-Z_-]+/api/cmnqr/payment/cancel
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_in_body: false
+            id: 1c0d576b-61e8-4f10-bb72-c81f6b24f7c4
+            enabled: true
+            name: key-auth
+        -   config:
+                echo_downstream: true
+                header_name: Kong-Request-ID
+                generator: uuid
+            id: edef3887-5c33-44f8-b81d-06d62fc09295
+            enabled: true
+            name: correlation-id
+-   id: 1e75028a-5d08-4e91-9d3d-3c81978c0ef0
+    name: pay_general_test_wrapperqr_get
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-cmnqr.sandbox.prod.jp.local/api/cmnqr/payment/get
+    retries: 3
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 10000
+    tags: null
+    routes:
+    -   id: 19915c5d-04cf-42b6-a48f-317578a31e5b
+        name: pay_netstars_test_wrapperqr-get
+        paths:
+        - /NETSTARS/[0-9a-zA-Z_-]+/api/cmnqr/payment/get
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_in_body: false
+            id: 938ca3a5-fc53-47a3-9623-21ac2088ef2f
+            enabled: true
+            name: key-auth
+        -   config:
+                echo_downstream: true
+                header_name: Kong-Request-ID
+                generator: uuid
+            id: 69c6da8e-36af-4b0b-a1d3-b4b095b0ede2
+            enabled: true
+            name: correlation-id
+-   id: 2fa69dd2-a1da-4865-8b3a-52192ffb10a0
+    name: pay_general_test_wrapperqr_reserve
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-cmnqr.sandbox.prod.jp.local/api/cmnqr/payment/reserve
+    retries: 3
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 10000
+    tags: null
+    routes:
+    -   id: fd814e8d-31b0-4e94-b69c-9d57653fb5e3
+        name: pay_netstars_test_wrapperqr-reserve
+        paths:
+        - /NETSTARS/[0-9a-zA-Z_-]+/api/cmnqr/payment/reserve
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                echo_downstream: true
+                header_name: Kong-Request-ID
+                generator: uuid
+            id: 6e425f53-0e3d-4ca8-9cf1-c3c4a85112cf
+            enabled: true
+            name: correlation-id
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_in_body: false
+            id: 3be95439-10cc-4f8a-86db-8e45f686b922
+            enabled: true
+            name: key-auth
+-   id: 653b72c9-0dc8-47b5-b254-314d69a41be7
+    name: test2_Shopper_CommonQrPaymentSet
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://finance-development.sandbox.prod.jp.local:21580/api/shopper/cmnqr/payment/set
+    retries: 3
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 10000
+    tags: null
+    routes:
+    -   id: 58636707-de01-4cad-b945-bcc279b95355
+        name: test2_Shopper_test2QrPaymentSet
+        paths:
+        - /RWallet/Shoppertest2QrPaymentSet
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 84ece770-df60-4ecd-9505-6d5f45ee047b
+    name: test2_Shopper_CommonQrPaymentGet
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://finance-development.sandbox.prod.jp.local:21580/api/shopper/cmnqr/payment/get
+    retries: 3
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 10000
+    tags: null
+    routes:
+    -   id: bc58930a-6819-4645-8168-8eaf4e3a5e53
+        name: test2_Shopper_test2QrPaymentGet
+        paths:
+        - /RWallet/Shoppertest2QrPaymentGet
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: bedb334d-f8e2-4f9d-88ed-5209fbdb3b56
+    name: pay_general_testqr_history
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-cmnqr.sandbox.prod.jp.local/api/cmnqr/payment/history
+    retries: 3
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 25000
+    tags: null
+    routes:
+    -   id: 363ff6c5-048a-4ec6-8c97-46d0c4135656
+        name: pay_netstars_testqr-history
+        paths:
+        - /NETSTARS/[0-9a-zA-Z_-]+/api/cmnqr/payment/history
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_in_body: false
+            id: 4926e31c-46b8-4a3d-8d03-9aedd2ffebb8
+            enabled: true
+            name: key-auth
+        -   config:
+                echo_downstream: true
+                header_name: Kong-Request-ID
+                generator: uuid
+            id: 88e82e00-bb22-412a-96b4-da6aba86ca79
+            enabled: true
+            name: correlation-id
+-   id: 8cdc4261-0757-4a7e-941a-e9c51e4a0d5a
+    name: pay_general_testqr_cancel
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-cmnqr.sandbox.prod.jp.local/api/cmnqr/payment/cancel
+    retries: 3
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 10000
+    tags: null
+    routes:
+    -   id: 26e89874-70d0-4187-bef9-a162070ca2ed
+        name: pay_netstars_testqr-cancel
+        paths:
+        - /NETSTARS/[0-9a-zA-Z_-]+/api/cmnqr/payment/cancel
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                echo_downstream: true
+                header_name: Kong-Request-ID
+                generator: uuid
+            id: 5cf4d998-9260-434a-9365-5a942000fa17
+            enabled: true
+            name: correlation-id
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_in_body: false
+            id: 9e17e2c4-6a7a-48de-97ab-29c634b466f9
+            enabled: true
+            name: key-auth
+-   id: 04d678a3-3e1e-4509-bbbb-ba2f273f85d6
+    name: pay_general_testqr_get
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-cmnqr.sandbox.prod.jp.local/api/cmnqr/payment/get
+    retries: 3
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 10000
+    tags: null
+    routes:
+    -   id: 2181ac54-2da4-437b-b143-725d4021f79a
+        name: pay_netstars_testqr-get
+        paths:
+        - /NETSTARS/[0-9a-zA-Z_-]+/api/cmnqr/payment/get
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                echo_downstream: true
+                header_name: Kong-Request-ID
+                generator: uuid
+            id: 25d07d60-0e6b-41c9-b400-878db0199194
+            enabled: true
+            name: correlation-id
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_in_body: false
+            id: 64b39df5-5761-41a3-826d-d98af4eeb410
+            enabled: true
+            name: key-auth
+-   id: e08938db-3c6e-4593-9db4-13e9352f4fda
+    name: pay_general_testqr_reserve
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://pay-ex-cmnqr.sandbox.prod.jp.local/api/cmnqr/payment/reserve
+    retries: 3
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 10000
+    tags: null
+    routes:
+    -   id: 26016444-b1e8-44fe-8396-2691ad84a857
+        name: pay_netstars_testqr-reserve
+        paths:
+        - /NETSTARS/[0-9a-zA-Z_-]+/api/cmnqr/payment/reserve
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_in_body: false
+            id: 0de5e455-b088-42eb-a163-232b00fc2181
+            enabled: true
+            name: key-auth
+        -   config:
+                echo_downstream: true
+                header_name: Kong-Request-ID
+                generator: uuid
+            id: 4dd4bb6b-3c81-4045-b46a-df1481d5d3e4
+            enabled: true
+            name: correlation-id
+-   id: d685130a-2f53-4d61-854f-bc3e0296ac21
+    name: test_Shopper_CommonQrPaymentSet
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://finance-development.sandbox.prod.jp.local:21580/api/shopper/cmnqr/payment/set
+    retries: 3
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 10000
+    tags: null
+    routes:
+    -   id: b287e597-da10-497b-9170-bb9dda1d2486
+        name: test_Shopper_TestQrPaymentSet
+        paths:
+        - /RWallet/ShopperTestQrPaymentSet
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 2ae85c06-a54b-4a81-8353-61be1ca79a5e
+    name: test_Shopper_CommonQrPaymentGet
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://finance-development.sandbox.prod.jp.local:21580/api/shopper/cmnqr/payment/get
+    retries: 3
+    connect_timeout: 10000
+    write_timeout: 10000
+    read_timeout: 10000
+    tags: null
+    routes:
+    -   id: c29f4eff-38ae-48f9-b682-8a31aff8012d
+        name: test_Shopper_TestQrPaymentGet
+        paths:
+        - /RWallet/ShopperTestQrPaymentGet
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 01e76197-d02e-4b43-a80d-bc190d686a1c
+    name: test_seveneleven_unbreakable_cancelpayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://rpay-merchant-router-seveneleven.gslb.dcnw.rakuten:21580/api/payment/cancel
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 25000
+    tags: null
+    routes:
+    -   id: 2ef48c9c-23b7-45bd-b7e3-311b7c2bf709
+        name: test_ub_cancel
+        paths:
+        - /TEST_UB/[0-9a-zA-Z_-]+/api/payment/cancel
+        - /TEST_UB/TEST/api/payment/cancel
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 1c859118-ecbc-4396-b1d2-b90fb8eeecf8
+    name: test_seveneleven_unbreakable_dopayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://rpay-merchant-router-seveneleven.gslb.dcnw.rakuten:21580/api/payment/set
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes:
+    -   id: 151328b5-6735-4e49-881e-7258d42a3a43
+        name: test_ub_set
+        paths:
+        - /TEST_UB/[0-9a-zA-Z_-]+/api/payment/set
+        - /TEST_UB/TEST/api/payment/set
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_in_body: false
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_names:
+                - RPay-GatewayCode
+            id: d99ffc33-69a0-48b8-a6f3-9e886d4c7ca8
+            enabled: true
+            name: key-auth
+        -   id: 012b6787-cdca-42f4-92f5-d3ffe1119319
+            name: request-transformer
+            enabled: true
+            config:
+                remove:
+                    querystring: []
+                    headers: []
+                    body: []
+                add:
+                    querystring: []
+                    headers:
+                    - RPay-Upstream:http://test_route_1
+                    body: []
+                http_method: null
+                append:
+                    querystring: []
+                    headers: []
+                    body: []
+                replace:
+                    querystring: []
+                    headers: []
+                    body: []
+                    uri: null
+                rename:
+                    querystring: []
+                    headers: []
+                    body: []
+        -   config:
+                echo_downstream: true
+                header_name: Kong-Request-ID
+                generator: uuid
+            id: ee64cc9c-c3ce-4e1c-aadc-811b0d6696eb
+            enabled: true
+            name: correlation-id
+-   id: fde4ec6c-f7fe-44b4-b0b3-7521acf2a9de
+    name: test_seveneleven_unbreakable_getpayment
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://rpay-merchant-router-seveneleven.gslb.dcnw.rakuten:21580/api/payment/get
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes:
+    -   id: 99d0da14-650f-4c24-9f55-f7573189d984
+        name: test_ub_get
+        paths:
+        - /TEST_UB/[0-9a-zA-Z_-]+/api/payment/get
+        - /TEST_UB/TEST+/api/payment/get
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   id: 7a226b29-6e48-4ed5-a56b-7e21378e67e6
+            name: request-transformer
+            enabled: true
+            config:
+                remove:
+                    querystring: []
+                    headers: []
+                    body: []
+                add:
+                    querystring: []
+                    headers:
+                    - RPay-Upstream:http://test_route_2
+                    body: []
+                http_method: null
+                append:
+                    querystring: []
+                    headers: []
+                    body: []
+                replace:
+                    querystring: []
+                    headers: []
+                    body: []
+                    uri: null
+                rename:
+                    querystring: []
+                    headers: []
+                    body: []
+-   id: 4f5a3240-f918-4db0-b821-8091e4b6056f
+    name: test-service-barcode-cancel
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://www.test.com
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes: []
+-   id: 131175d7-11f3-453e-9532-00fdb19084ca
+    name: test-service-barcode-set
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://www.test.com
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes: []
+-   id: 5c551be2-6cf9-49bb-ac6e-459c3d9e2286
+    name: test-service-barcode-get
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: https://www.test.com
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes: []
+-   id: 24d2f1b3-e873-4509-a29c-b6f0a1b07605
+    name: test_unbreakable-upstream-header
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://stg-arpayexgw101z.stg.jp.local:31080/HeaderPrintingApp/
+    retries: 3
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: ee667738-465f-44c6-8879-15775d0ac5c1
+        name: test_unbreakable-upstream-header_specific
+        paths:
+        - /TEST-UNBREAKABLE/12345/get
+        methods:
+        - GET
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_in_body: false
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_names:
+                - RPay-GatewayCode
+            id: 783cdd9d-c54a-4cf2-820a-967c8bad19a6
+            enabled: true
+            name: key-auth
+        -   id: 0b5bc666-b015-422d-842b-e3b78b130f3f
+            name: request-transformer
+            enabled: true
+            config:
+                remove:
+                    querystring: []
+                    headers: []
+                    body: []
+                add:
+                    querystring: []
+                    headers:
+                    - X-RPay-Upstream:http://specific-upstream.com
+                    body: []
+                http_method: null
+                append:
+                    querystring: []
+                    headers: []
+                    body: []
+                replace:
+                    querystring: []
+                    headers: []
+                    body: []
+                    uri: null
+                rename:
+                    querystring: []
+                    headers: []
+                    body: []
+-   id: b3b1eb73-a4f4-4b58-af32-ee796e31ef2e
+    name: wrapper_unbreakable_direct-payment-cancel
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://rpay-wrapper-8080-rpay-dev-wallet-api.jpe2-caas1-dev1.caas.jpe2b.r-local.net/api/payment/cancel
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 25000
+    tags: null
+    routes: []
+-   id: 714298fb-660f-494a-a81e-a4bfaba9df0d
+    name: wrapper_unbreakable_direct-payment-get
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://rpay-wrapper-8080-rpay-dev-wallet-api.jpe2-caas1-dev1.caas.jpe2b.r-local.net/api/payment/get
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes: []
+-   id: 14130e3f-a84b-4142-9a8b-e553cd1c52d0
+    name: wrapper_unbreakable_direct-payment-set
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://rpay-wrapper-8080-rpay-dev-wallet-api.jpe2-caas1-dev1.caas.jpe2b.r-local.net/api/payment/set
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes: []
+-   id: aea7dcf8-0802-4b89-b127-f89fb81ec521
+    name: wrapper_unbreakable-payment-cancel
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://rpay-merchant-router-local-8080-rpay-dev-wallet-api.jpe2-caas1-dev1.caas.jpe2b.r-local.net/api/payment/cancel
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 25000
+    tags: null
+    routes:
+    -   id: cba663c6-499f-4fa5-8f7f-90bfe819543a
+        name: wrapper_unbreakable_barcode-payment-cancel
+        paths:
+        - /UNBREAKABLE/[0-9a-zA-Z_-]+/api/payment/cancel
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                key_in_body: false
+                anonymous: null
+                hide_credentials: false
+                run_on_preflight: true
+            id: 6968864c-5f00-4c38-bb88-d3feb0d0ea7c
+            enabled: true
+            name: key-auth
+-   id: 7b0a9185-3362-44f1-8caf-28a83b9b2451
+    name: wrapper_unbreakable-payment-get
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://rpay-merchant-router-local-8080-rpay-dev-wallet-api.jpe2-caas1-dev1.caas.jpe2b.r-local.net/api/payment/get
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes:
+    -   id: 516b9796-0ced-41b2-8239-ce174e11172c
+        name: wrapper_unbreakable_barcode-payment-get
+        paths:
+        - /UNBREAKABLE/[0-9a-zA-Z_-]+/api/payment/get
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                key_in_body: false
+                anonymous: null
+                hide_credentials: false
+                run_on_preflight: true
+            id: d2897a48-85dc-4c7e-b2de-8385b7a9a305
+            enabled: true
+            name: key-auth
+-   id: dcede72f-6b55-44a7-9309-1af14efe963e
+    name: wrapper_unbreakable-payment-set
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://rpay-merchant-router-local-8080-rpay-dev-wallet-api.jpe2-caas1-dev1.caas.jpe2b.r-local.net/api/payment/set
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes:
+    -   id: 59d23454-de5c-4716-9935-541a3bf44370
+        name: wrapper_unbreakable_barcode-payment-set
+        paths:
+        - /UNBREAKABLE/[0-9a-zA-Z_-]+/api/payment/set
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                key_in_body: false
+                anonymous: null
+                hide_credentials: false
+                run_on_preflight: true
+            id: 549c2461-b4b7-4774-9a5f-5fce3a00864d
+            enabled: true
+            name: key-auth
+-   id: 5c4de94e-4dbf-48f4-be59-fc0cb4ea225f
+    name: 3pp_payment-update
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://stg-arpayexgw101z.stg.jp.local:31080/rpay-third-party-pay-api/api/payment/update
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes:
+    -   id: 57a01a3e-7217-4c34-8b32-45981dd4be1e
+        name: 3pp_kddi_payment-update
+        paths:
+        - /kddi/api/payment/update
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: e9c2f450-519e-4724-84d5-738203d6dc6d
+    name: 3pp_payment-request
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://stg-arpayexgw101z.stg.jp.local:31080/rpay-third-party-pay-api/api/payment/request
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes:
+    -   id: 9dd94de8-e3db-4898-ae49-52721551cc97
+        name: 3pp_kddi_payment-request
+        paths:
+        - /kddi/api/payment/request
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+-   id: 67744cc7-4b84-438d-8147-3e0d2bdc90b2
+    name: xoo_payment-history
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://stg-arpayexgw101z.stg.jp.local:31080/rpay-pay-over-oauth-api/api/payment/history
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 25000
+    tags: null
+    routes:
+    -   id: 344b8d94-adfe-4f58-9908-23c452b3adae
+        name: xoo_cokeon_payment-history
+        paths:
+        - /cokeon/api/payment/history
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                remove:
+                    querystring: []
+                    headers: []
+                    body: []
+                add:
+                    querystring: []
+                    headers:
+                    - Pay-GatewayCode:CokeOnPay
+                    - Pay-CompanyCode:CokeOnPay
+                    body: []
+                http_method: null
+                append:
+                    querystring: []
+                    headers: []
+                    body: []
+                replace:
+                    querystring: []
+                    headers: []
+                    body: []
+                    uri: null
+                rename:
+                    querystring: []
+                    headers: []
+                    body: []
+            id: 727afcd7-849f-4004-9ca2-438c7e754485
+            enabled: true
+            name: request-transformer
+-   id: 1a81cbe2-7b0b-4423-9d27-f0b3b1e4a954
+    name: xoo_cokeon-payment-cancel
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://stg-arpayexgw101z.stg.jp.local:31080/rpay-pay-over-oauth-api/api/coke-on/payment/cancel
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 25000
+    tags: null
+    routes:
+    -   id: f3c3becb-0cbf-4677-82c3-5fce985969ba
+        name: xoo_cokeon_payment-cancel
+        paths:
+        - /cokeon/api/payment/cancel
+        methods:
+        - DELETE
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                remove:
+                    querystring: []
+                    headers: []
+                    body: []
+                add:
+                    querystring: []
+                    headers:
+                    - Pay-GatewayCode:CokeOnPay
+                    - Pay-CompanyCode:CokeOnPay
+                    body: []
+                http_method: null
+                append:
+                    querystring: []
+                    headers: []
+                    body: []
+                replace:
+                    querystring: []
+                    headers: []
+                    body: []
+                    uri: null
+                rename:
+                    querystring: []
+                    headers: []
+                    body: []
+            id: fe71f991-e811-4fb8-815b-a66272f9568b
+            enabled: true
+            name: request-transformer
+-   id: d4d79a70-8e83-4d3d-bddd-817261470b09
+    name: xoo_cokeon-payment-set
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://stg-arpayexgw101z.stg.jp.local:31080/rpay-pay-over-oauth-api/api/coke-on/payment/set
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 25000
+    tags: null
+    routes:
+    -   id: aee18af8-c996-4877-9742-1d647ac1d7e4
+        name: xoo_cokeon_payment-set
+        paths:
+        - /cokeon/api/payment/set
+        methods: null
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                remove:
+                    querystring: []
+                    headers: []
+                    body: []
+                add:
+                    querystring: []
+                    headers:
+                    - Pay-GatewayCode:CokeOnPay
+                    - Pay-CompanyCode:CokeOnPay
+                    body: []
+                http_method: null
+                append:
+                    querystring: []
+                    headers: []
+                    body: []
+                replace:
+                    querystring: []
+                    headers: []
+                    body: []
+                    uri: null
+                rename:
+                    querystring: []
+                    headers: []
+                    body: []
+            id: 4047d43e-0ce8-4ee2-8836-a20f95162479
+            enabled: true
+            name: request-transformer
+-   id: dc7a6602-c612-4168-9f15-75bfcd8415d3
+    name: xoo_token-invalidate
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://stg-arpayexgw101z.stg.jp.local:31080/rpay-pay-over-oauth-api/api/token/invalidate
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes:
+    -   id: 11db8f8c-43d3-4283-922d-e71f7eb04ac5
+        name: xoo_cokeon_token-invalidate
+        paths:
+        - /cokeon/api/token/invalidate
+        methods:
+        - DELETE
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                remove:
+                    querystring: []
+                    headers: []
+                    body: []
+                add:
+                    querystring: []
+                    headers:
+                    - Pay-GatewayCode:CokeOnPay
+                    - Pay-CompanyCode:CokeOnPay
+                    body: []
+                http_method: null
+                append:
+                    querystring: []
+                    headers: []
+                    body: []
+                replace:
+                    querystring: []
+                    headers: []
+                    body: []
+                    uri: null
+                rename:
+                    querystring: []
+                    headers: []
+                    body: []
+            id: 337cdbf0-f6e9-4816-9623-0c38970c6a55
+            enabled: true
+            name: request-transformer
+-   id: 4ee7e369-4ce3-43bf-a5af-c4197cd21564
+    name: xoo_token-refresh
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://stg-arpayexgw101z.stg.jp.local:31080/rpay-pay-over-oauth-api/api/token/refresh
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 1000
+    tags: null
+    routes:
+    -   id: a63466e8-544c-4b86-ae63-2123542d5b0a
+        name: xoo_cokeon_token-refresh
+        paths:
+        - /cokeon/api/token/refresh
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                remove:
+                    querystring: []
+                    headers: []
+                    body: []
+                add:
+                    querystring: []
+                    headers:
+                    - Pay-GatewayCode:CokeOnPay
+                    - Pay-CompanyCode:CokeOnPay
+                    body: []
+                http_method: null
+                append:
+                    querystring: []
+                    headers: []
+                    body: []
+                replace:
+                    querystring: []
+                    headers: []
+                    body: []
+                    uri: null
+                rename:
+                    querystring: []
+                    headers: []
+                    body: []
+            id: 3d9a00f2-ae06-4bb8-a0b7-98f670b00174
+            enabled: true
+            name: request-transformer
+-   id: 10774f8d-6608-4adb-b820-3a19f149c0d1
+    name: xoo_token-get
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://stg-arpayexgw101z.stg.jp.local:31080/rpay-pay-over-oauth-api/api/token/get
+    retries: 2
+    connect_timeout: 3000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes:
+    -   id: 46d463c4-67fa-4031-ab9f-fbad26b07408
+        name: xoo_cokeon_token-get
+        paths:
+        - /cokeon/api/token/get
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                remove:
+                    querystring: []
+                    headers: []
+                    body: []
+                add:
+                    querystring: []
+                    headers:
+                    - Pay-GatewayCode:CokeOnPay
+                    - Pay-CompanyCode:CokeOnPay
+                    body: []
+                http_method: null
+                append:
+                    querystring: []
+                    headers: []
+                    body: []
+                replace:
+                    querystring: []
+                    headers: []
+                    body: []
+                    uri: null
+                rename:
+                    querystring: []
+                    headers: []
+                    body: []
+            id: 389aa1b9-97b4-4e5a-a2d2-c17d363ad48e
+            enabled: true
+            name: request-transformer
+-   id: 9dc69266-6e9e-47a6-a796-b4000c84d68c
+    name: wrapper_external-payment-history
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://stg-arpayexgw101z.stg.jp.local:31080/api/external/payment/history
+    retries: 2
+    connect_timeout: 1000
+    write_timeout: 3000
+    read_timeout: 25000
+    tags: null
+    routes:
+    -   id: 15d197a0-362b-4eca-bcd3-4b0218ea279a
+        name: wrapper_qa_external-payment-history
+        paths:
+        - /QA/[0-9a-zA-Z_-]+/api/external/payment/history
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                key_in_body: false
+                anonymous: null
+                hide_credentials: false
+                run_on_preflight: true
+            id: 0c7529ce-366f-42c2-a18d-504786e90171
+            enabled: true
+            name: key-auth
+        -   config:
+                echo_downstream: true
+                header_name: Kong-Request-ID
+                generator: uuid
+            id: 67bfc19d-a6ce-4ab5-b86b-466162d63a8b
+            enabled: true
+            name: correlation-id
+    -   id: 23e5b201-fcd8-47d5-9f0f-f47f7d41315d
+        name: wrapper_audit_external-payment-history
+        paths:
+        - /AUDIT/[0-9a-zA-Z_-]+/api/external/payment/history
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                echo_downstream: true
+                header_name: Kong-Request-ID
+                generator: uuid
+            id: bb3e8267-08c3-4e5c-abb4-c7fc5a186fff
+            enabled: true
+            name: correlation-id
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                key_in_body: false
+                anonymous: null
+                hide_credentials: false
+                run_on_preflight: true
+            id: 804697a8-d3dc-437e-ba29-d643aa0efecc
+            enabled: true
+            name: key-auth
+-   id: 61ddf0ba-459c-454c-a24f-2a57d6cf1052
+    name: wrapper_external-payment-cancel
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://stg-arpayexgw101z.stg.jp.local:31080/api/external/payment/cancel
+    retries: 2
+    connect_timeout: 1000
+    write_timeout: 3000
+    read_timeout: 25000
+    tags: null
+    routes:
+    -   id: 81d7552e-9405-4ebc-add9-23d5f1289eb2
+        name: wrapper_qa_external-payment-cancel
+        paths:
+        - /QA/[0-9a-zA-Z_-]+/api/external/payment/cancel
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                key_in_body: false
+                anonymous: null
+                hide_credentials: false
+                run_on_preflight: true
+            id: a47144fe-57bf-40f9-b5eb-d92095fe7d9f
+            enabled: true
+            name: key-auth
+        -   config:
+                echo_downstream: true
+                header_name: Kong-Request-ID
+                generator: uuid
+            id: 6dbce923-ce2e-4fb4-9e13-fbfdd7f9fcfb
+            enabled: true
+            name: correlation-id
+    -   id: 6d09b4e0-c9bd-446a-b784-2fa053377c02
+        name: wrapper_audit_external-payment-cancel
+        paths:
+        - /AUDIT/[0-9a-zA-Z_-]+/api/external/payment/cancel
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                key_in_body: false
+                anonymous: null
+                hide_credentials: false
+                run_on_preflight: true
+            id: 0e12009b-986a-4017-a6a9-3ed9223f2d92
+            enabled: true
+            name: key-auth
+        -   config:
+                echo_downstream: true
+                header_name: Kong-Request-ID
+                generator: uuid
+            id: d2042ed3-50a7-4cb8-b8d6-6d2dddaef49d
+            enabled: true
+            name: correlation-id
+-   id: 664088ac-d9c4-4d0e-bc08-d22eca646b64
+    name: wrapper_external-payment-abort
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://stg-arpayexgw101z.stg.jp.local:31080/api/external/payment/abort
+    retries: 2
+    connect_timeout: 1000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes:
+    -   id: b017dbb3-ae4e-4e94-a806-ef2b76e9f7d7
+        name: wrapper_qa_external-payment-abort
+        paths:
+        - /QA/[0-9a-zA-Z_-]+/api/external/payment/abort
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                key_in_body: false
+                anonymous: null
+                hide_credentials: false
+                run_on_preflight: true
+            id: a482bf9f-5c7f-4b8c-a252-15486456bdc9
+            enabled: true
+            name: key-auth
+        -   config:
+                echo_downstream: true
+                header_name: Kong-Request-ID
+                generator: uuid
+            id: dc94541b-1ea3-4091-95c5-25a722876538
+            enabled: true
+            name: correlation-id
+    -   id: 5f2974ee-9919-435a-a3b0-f34c698abcef
+        name: wrapper_audit_external-payment-abort
+        paths:
+        - /AUDIT/[0-9a-zA-Z_-]+/api/external/payment/abort
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                echo_downstream: true
+                header_name: Kong-Request-ID
+                generator: uuid
+            id: deef300e-30d3-47a6-8fa7-4de43c321fb2
+            enabled: true
+            name: correlation-id
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                key_in_body: false
+                anonymous: null
+                hide_credentials: false
+                run_on_preflight: true
+            id: a5dcec9e-5225-4e99-87a1-7deb57225cbb
+            enabled: true
+            name: key-auth
+-   id: f7b05476-adb0-4ab6-9e42-08438e8e670e
+    name: wrapper_external-payment-get
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://stg-arpayexgw101z.stg.jp.local:31080/api/external/payment/get
+    retries: 2
+    connect_timeout: 1000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: df4bb8ef-69cf-4848-9104-c4bf66c29133
+        name: wrapper_qa_external-payment-get
+        paths:
+        - /QA/[0-9a-zA-Z_-]+/api/external/payment/get
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                echo_downstream: true
+                header_name: Kong-Request-ID
+                generator: uuid
+            id: d161cb8d-733a-44a7-a6c4-06a79f44eaff
+            enabled: true
+            name: correlation-id
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                key_in_body: false
+                anonymous: null
+                hide_credentials: false
+                run_on_preflight: true
+            id: 35e0f786-e180-43a7-8ce0-a2b83fcaa0b0
+            enabled: true
+            name: key-auth
+    -   id: 70f0ddfa-0cc0-4578-8f72-964f0f6daa19
+        name: wrapper_audit_external-payment-get
+        paths:
+        - /AUDIT/[0-9a-zA-Z_-]+/api/external/payment/get
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                echo_downstream: true
+                header_name: Kong-Request-ID
+                generator: uuid
+            id: 36230999-be4d-4b6b-9151-1321bbffa183
+            enabled: true
+            name: correlation-id
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                key_in_body: false
+                anonymous: null
+                hide_credentials: false
+                run_on_preflight: true
+            id: d6fecc38-98f0-412a-85cb-a4d00474e168
+            enabled: true
+            name: key-auth
+-   id: 0fdb3cd3-a1f6-472c-b011-7f704d0cbf08
+    name: wrapper_external-payment-reserve
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://stg-arpayexgw101z.stg.jp.local:31080/api/external/payment/reserve
+    retries: 2
+    connect_timeout: 1000
+    write_timeout: 3000
+    read_timeout: 10000
+    tags: null
+    routes:
+    -   id: 6adff5f6-8354-4772-b9e4-a16aa3958ca7
+        name: wrapper_qa_external-payment-reserve
+        paths:
+        - /QA/[0-9a-zA-Z_-]+/api/external/payment/reserve
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                echo_downstream: true
+                header_name: Kong-Request-ID
+                generator: uuid
+            id: 20ff1a13-9e18-4b6d-b646-d65b34785063
+            enabled: true
+            name: correlation-id
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                key_in_body: false
+                anonymous: null
+                hide_credentials: false
+                run_on_preflight: true
+            id: baa8dfb3-c8f4-4d14-a8f5-75472bbec657
+            enabled: true
+            name: key-auth
+    -   id: 6af3dc41-2c63-4bb1-b460-0167d9dd5787
+        name: wrapper_audit_external-payment-reserve
+        paths:
+        - /AUDIT/[0-9a-zA-Z_-]+/api/external/payment/reserve
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                key_in_body: false
+                anonymous: null
+                hide_credentials: false
+                run_on_preflight: true
+            id: fd221bf5-2164-411e-be4a-b2a6789d8f6c
+            enabled: true
+            name: key-auth
+        -   config:
+                echo_downstream: true
+                header_name: Kong-Request-ID
+                generator: uuid
+            id: 475466bc-1c76-4a5a-9bd8-2fa9a1cfea69
+            enabled: true
+            name: correlation-id
+-   id: d73b0d35-8272-4fb7-a599-e31f80c7da0a
+    name: wrapper_barcode-payment-history
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://stg-arpayexgw101z.stg.jp.local:31080/api/payment/history
+    retries: 2
+    connect_timeout: 1000
+    write_timeout: 3000
+    read_timeout: 25000
+    tags: null
+    routes:
+    -   id: 10abac49-a070-49fe-a34e-deb099af89b7
+        name: test_ub_history
+        paths:
+        - /api/payment/history
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_in_body: false
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_names:
+                - RPay-GatewayCode
+            id: 4d093cf1-a4d3-498a-8958-40e21b2b9c83
+            enabled: true
+            name: key-auth
+        -   config:
+                allow:
+                - 10.0.0.1
+                deny: []
+            id: 6ad05c05-4523-4c0b-8f1e-47cb39f90c5b
+            enabled: true
+            name: ip-restriction
+    -   id: 17f0b6f7-ea73-4038-9adc-a403f93242b2
+        name: wrapper_qa_barcode-payment-history
+        paths:
+        - /QA/[0-9a-zA-Z_-]+/api/payment/history
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                echo_downstream: true
+                header_name: Kong-Request-ID
+                generator: uuid
+            id: 32458ef2-6720-469e-9376-ff8d613c5dad
+            enabled: true
+            name: correlation-id
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                key_in_body: false
+                anonymous: null
+                hide_credentials: false
+                run_on_preflight: true
+            id: d77c7792-e5e2-495f-be49-8ddc4d85f16a
+            enabled: true
+            name: key-auth
+    -   id: 40aa4592-4084-4b52-bba4-9a8710f6c5c4
+        name: wrapper_audit_barcode-payment-history
+        paths:
+        - /AUDIT/[0-9a-zA-Z_-]+/api/payment/history
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                key_in_body: false
+                anonymous: null
+                hide_credentials: false
+                run_on_preflight: true
+            id: 13d41d5e-33e8-4ae2-b443-c0b00b647358
+            enabled: true
+            name: key-auth
+        -   config:
+                echo_downstream: true
+                header_name: Kong-Request-ID
+                generator: uuid
+            id: d16b9196-0769-43d5-8d77-544786a2c047
+            enabled: true
+            name: correlation-id
+-   id: ba97db2f-83e4-49f9-a697-d6ad391519db
+    name: wrapper_barcode-payment-cancel
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://stg-arpayexgw101z.stg.jp.local:31080/api/payment/cancel
+    retries: 2
+    connect_timeout: 1000
+    write_timeout: 3000
+    read_timeout: 25000
+    tags: null
+    routes:
+    -   id: 5ef8ef0d-dedf-4aae-9c13-c60b7d24b354
+        name: pay_paytree_UnbreakableFieldTest_barcode-payment-cancel
+        paths:
+        - /PTREE/[0-9a-zA-Z_-]+/api/payment/cancel
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+    -   id: 51aee9cb-e4f6-4fd6-99ff-7b749aee05fc
+        name: wrapper_qa_barcode-payment-cancel
+        paths:
+        - /QA/[0-9a-zA-Z_-]+/api/payment/cancel
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                echo_downstream: true
+                header_name: Kong-Request-ID
+                generator: uuid
+            id: a5ec53f6-009b-4a84-b6cb-74ea54647310
+            enabled: true
+            name: correlation-id
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                key_in_body: false
+                anonymous: null
+                hide_credentials: false
+                run_on_preflight: true
+            id: 54b6c850-069a-4afd-b692-8f39a88232a0
+            enabled: true
+            name: key-auth
+    -   id: a7dd07de-4032-4d46-b5e1-40821ea487eb
+        name: wrapper_audit_barcode-payment-cancel
+        paths:
+        - /AUDIT/[0-9a-zA-Z_-]+/api/payment/cancel
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                echo_downstream: true
+                header_name: Kong-Request-ID
+                generator: uuid
+            id: 98993565-6f2f-404b-a245-23475e2969f1
+            enabled: true
+            name: correlation-id
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                key_in_body: false
+                anonymous: null
+                hide_credentials: false
+                run_on_preflight: true
+            id: ab9d80ba-f6bc-4c68-8f28-b1581f6c71b4
+            enabled: true
+            name: key-auth
+-   id: 72bfe927-5e5e-4a0a-a682-f1a08ce1dcaf
+    name: wrapper_barcode-payment-get
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://stg-arpayexgw101z.stg.jp.local:31080/api/payment/get
+    retries: 2
+    connect_timeout: 1000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: 3ed8e733-c36c-429f-9bc2-2726ea9b4abf
+        name: pay_paytree_UnbreakableFieldTest_barcode-payment-get
+        paths:
+        - /PTREE/[0-9a-zA-Z_-]+/api/payment/get
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+    -   id: a3cde7f4-195b-4d99-a08b-20799bc55dee
+        name: wrapper_qa_barcode-payment-get
+        paths:
+        - /QA/[0-9a-zA-Z_-]+/api/payment/get
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                echo_downstream: true
+                header_name: Kong-Request-ID
+                generator: uuid
+            id: 31e85415-8ba1-4a7b-b15d-2173b9d5ada3
+            enabled: true
+            name: correlation-id
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                key_in_body: false
+                anonymous: null
+                hide_credentials: false
+                run_on_preflight: true
+            id: 14182cac-9f56-4595-8a51-f0e4625987d5
+            enabled: true
+            name: key-auth
+    -   id: f8c2719c-177b-49ad-ad87-d1608b39f4c9
+        name: wrapper_audit_barcode-payment-get
+        paths:
+        - /AUDIT/[0-9a-zA-Z_-]+/api/payment/get
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                key_in_body: false
+                anonymous: null
+                hide_credentials: false
+                run_on_preflight: true
+            id: 34c4992b-cb96-452a-975f-95533056c733
+            enabled: true
+            name: key-auth
+        -   config:
+                echo_downstream: true
+                header_name: Kong-Request-ID
+                generator: uuid
+            id: a99c3516-9b5f-4d04-97b1-786f2b891428
+            enabled: true
+            name: correlation-id
+-   id: d9adfe5d-9bdf-49cd-a674-9fbe404072a7
+    name: wrapper_barcode-payment-set
+    protocol: null
+    host: null
+    port: null
+    path: null
+    url: http://stg-arpayexgw101z.stg.jp.local:31080/api/payment/set
+    retries: 2
+    connect_timeout: 1000
+    write_timeout: 3000
+    read_timeout: 3000
+    tags: null
+    routes:
+    -   id: c0c23f95-cd68-44c4-9e08-064d1e5fef47
+        name: pay_paytree_UnbreakableFieldTest_barcode-payment-set
+        paths:
+        - /PTREE/[0-9a-zA-Z_-]+/api/payment/set
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins: []
+    -   id: 17ba929b-8f6b-44d5-843b-bcd39c0a214a
+        name: test_GW_barcode-payment-get
+        paths:
+        - /test/[0-9a-zA-Z_-]+/api/payment/set
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                key_in_body: false
+                hide_credentials: false
+                anonymous: null
+                run_on_preflight: true
+                key_names:
+                - apikey
+            id: 37e693c3-2983-4f6f-a9a6-64d3d2e0e297
+            enabled: true
+            name: key-auth
+    -   id: 8b3a6b87-9ff0-443d-9830-f744f6ab76dc
+        name: wrapper_audit_barcode-payment-set
+        paths:
+        - /AUDIT/[0-9a-zA-Z_-]+/api/payment/set
+        methods:
+        - POST
+        protocols:
+        - http
+        - https
+        hosts: null
+        snis: null
+        regex_priority: null
+        strip_path: true
+        preserve_host: false
+        tags: null
+        plugins:
+        -   config:
+                echo_downstream: true
+                header_name: Kong-Request-ID
+                generator: uuid
+            id: 4343d47d-182c-4064-8781-938bcbd12eac
+            enabled: true
+            name: correlation-id
+        -   config:
+                key_names:
+                - RPay-GatewayCode
+                key_in_body: false
+                anonymous: null
+                hide_credentials: false
+                run_on_preflight: true
+            id: 08cd0262-df9a-4698-bd45-8274d361ea51
+            enabled: true
+            name: key-auth
+consumers:
+-   id: f08400b1-734d-4829-8514-1c705083fd86
+    username: pay_test_gateway
+    custom_id: pay_test_gateway
+    tags: null
+    plugins:
+    -   id: 77099439-34b8-45db-9af3-935ee1563265
+        enabled: true
+        name: correlation-id
+        config:
+            echo_downstream: true
+            header_name: Kong-Request-ID
+            generator: uuid#counter
+    -   id: 3f4d9c47-5481-4f0b-8c19-dd261595f65d
+        enabled: true
+        name: request-transformer
+        config:
+            remove:
+                querystring: []
+                headers: []
+                body: []
+            add:
+                querystring: []
+                headers:
+                - X-RPay-Upstream:http://pay-ex-general.sandbox.prod.jp.local:21580
+                body: []
+            http_method: null
+            append:
+                querystring: []
+                headers: []
+                body: []
+            replace:
+                querystring: []
+                headers: []
+                body: []
+                uri: null
+            rename:
+                querystring: []
+                headers: []
+                body: []
+    -   id: ae198b29-7f6c-4c4c-9b28-2365e5aca265
+        enabled: true
+        name: ip-restriction
+        config:
+            allow:
+            - 52.193.36.224
+            - 52.193.36.225
+            - 52.193.36.227
+            deny: null
+    keyauth_credentials:
+    -   key: RpayStg_ISTARIX
+-   id: 103e749e-bd07-47e0-a661-90d6e6607985
+    username: test_netstars
+    custom_id: test_netstars
+    tags: null
+    plugins:
+    -   id: 59583ffc-12a0-4bb6-854a-94094b0a3c0c
+        enabled: true
+        name: ip-restriction
+        config:
+            allow:
+            - 112.140.34.58
+            deny: null
+    keyauth_credentials: []
+-   id: 12992764-a52e-4cf2-afe8-8b0196711a55
+    username: Test_client_001
+    custom_id: Test_client_001
+    tags: null
+    plugins: []
+    keyauth_credentials:
+    -   key: test_key_001
+-   id: 3ce2fd2a-424d-4261-a0cf-06d2df8306d7
+    username: pay_istarix_test31
+    custom_id: pay_istarix_test31
+    tags: null
+    plugins:
+    -   id: 67126be8-8163-4fde-a2c6-7862f9351978
+        enabled: true
+        name: ip-restriction
+        config:
+            allow:
+            - 10.0.0.1
+            deny: null
+    -   id: 763d0481-298f-434c-92cd-75c08de607d8
+        enabled: true
+        name: correlation-id
+        config:
+            echo_downstream: true
+            header_name: Kong-Request-ID
+            generator: uuid#counter
+    -   id: c5dd93de-fc05-449c-b943-c9e46cc8acd3
+        enabled: true
+        name: request-transformer
+        config:
+            remove:
+                querystring: []
+                headers: []
+                body: []
+            add:
+                querystring: []
+                headers:
+                - X-RPay-Upstream:http://pay-ex-general.sandbox.prod.jp.local:21580
+                body: []
+            http_method: null
+            append:
+                querystring: []
+                headers: []
+                body: []
+            replace:
+                querystring: []
+                headers: []
+                body: []
+                uri: null
+            rename:
+                querystring: []
+                headers: []
+                body: []
+    keyauth_credentials:
+    -   key: RPayPro_ISTARIX_test31
+-   id: 105feab3-4f91-4ea9-9510-2f322a58713e
+    username: pay_istarix
+    custom_id: pay_istarix
+    tags: null
+    plugins:
+    -   id: f8b724b2-956d-4e39-b4c8-c9f13a077157
+        enabled: true
+        name: request-transformer
+        config:
+            remove:
+                querystring: []
+                headers: []
+                body: []
+            add:
+                querystring: []
+                headers:
+                - X-RPay-Upstream:http://pay-ex-general.sandbox.prod.jp.local:21580
+                body: []
+            http_method: null
+            append:
+                querystring: []
+                headers: []
+                body: []
+            replace:
+                querystring: []
+                headers: []
+                body: []
+                uri: null
+            rename:
+                querystring: []
+                headers: []
+                body: []
+    -   id: b68199e5-d70d-410a-ba88-2fa396c26ff3
+        enabled: true
+        name: ip-restriction
+        config:
+            allow:
+            - 52.69.64.253
+            - 13.114.2.149
+            deny: []
+    keyauth_credentials:
+    -   key: RPayPro_ISTARIX
+-   id: 385be3ef-7e0e-4b2e-999b-fd67c0bc26ba
+    username: pay_takeme
+    custom_id: pay_takeme
+    tags: null
+    plugins:
+    -   id: 32b44004-1853-434a-b369-8ce8384d311f
+        enabled: true
+        name: request-transformer
+        config:
+            remove:
+                querystring: []
+                headers: []
+                body: []
+            add:
+                querystring: []
+                headers:
+                - X-RPay-Upstream:http://pay-ex-general.sandbox.prod.jp.local:21580
+                body: []
+            http_method: null
+            append:
+                querystring: []
+                headers: []
+                body: []
+            replace:
+                querystring: []
+                headers: []
+                body: []
+                uri: null
+            rename:
+                querystring: []
+                headers: []
+                body: []
+    -   id: 025b81a1-32c3-4a86-a250-0398f850c3ed
+        enabled: true
+        name: correlation-id
+        config:
+            echo_downstream: true
+            header_name: Kong-Request-ID
+            generator: uuid#counter
+    -   id: 35902aad-dee3-4a94-bac9-deb5c7185e2b
+        enabled: true
+        name: ip-restriction
+        config:
+            allow:
+            - 54.250.33.133
+            - 52.199.48.248
+            - 13.248.215.123
+            - 76.223.84.244
+            deny: null
+    keyauth_credentials:
+    -   key: RPayPro_TAKEME
+-   id: 16672ce9-612b-4778-bca6-7bf7aaa684e8
+    username: pay_nstars
+    custom_id: pay_nstars
+    tags: null
+    plugins:
+    -   id: ee9d937f-cdd7-4b80-9ea4-4e890434c1b1
+        enabled: false
+        name: ip-restriction
+        config:
+            allow:
+            - 10.0.0.1
+            - 18.177.63.115
+            - 18.176.92.141
+            - 18.178.116.96
+            - 18.177.63.115
+            - 18.176.92.141
+            - 18.178.116.96
+            deny: null
+    -   id: 353b6758-ffe3-4409-89df-5aefba9b9692
+        enabled: false
+        name: request-transformer
+        config:
+            remove:
+                querystring: []
+                headers: []
+                body: []
+            add:
+                querystring: []
+                headers:
+                - test:test
+                body: []
+            http_method: null
+            append:
+                querystring: []
+                headers: []
+                body: []
+            replace:
+                querystring: []
+                headers: []
+                body: []
+                uri: null
+            rename:
+                querystring: []
+                headers: []
+                body: []
+    keyauth_credentials:
+    -   key: RPayIns_NETSTARS
+-   id: 92922538-9cb0-47d5-92a7-734d4a552ef3
+    username: pay_yamaya
+    custom_id: pay_yamaya
+    tags: null
+    plugins:
+    -   id: b47e2ed6-8b6a-4859-ae22-1cb0a2f518b3
+        enabled: true
+        name: correlation-id
+        config:
+            echo_downstream: true
+            header_name: Kong-Request-ID
+            generator: uuid#counter
+    -   id: 23461b2b-76f4-45cb-a3bd-a99bb8dc420c
+        enabled: true
+        name: ip-restriction
+        config:
+            allow:
+            - 180.42.41.45
+            deny: null
+    -   id: 27df5d87-9736-4015-b542-5a3a48db0502
+        enabled: true
+        name: request-transformer
+        config:
+            remove:
+                querystring: []
+                headers: []
+                body: []
+            add:
+                querystring: []
+                headers:
+                - X-RPay-Upstream:http://pay-ex-general.sandbox.prod.jp.local:21580
+                body: []
+            http_method: null
+            append:
+                querystring: []
+                headers: []
+                body: []
+            replace:
+                querystring: []
+                headers: []
+                body: []
+                uri: null
+            rename:
+                querystring: []
+                headers: []
+                body: []
+    keyauth_credentials:
+    -   key: RPayPro_YAMAYA
+-   id: f57126a6-2508-4c4d-88ea-d4f9d015c50e
+    username: pay_istarix_test
+    custom_id: pay_istarix_test
+    tags: null
+    plugins:
+    -   id: 7a75fb0f-4414-49bc-a737-7e231e70fcdd
+        enabled: true
+        name: correlation-id
+        config:
+            echo_downstream: true
+            header_name: Kong-Request-ID
+            generator: uuid#counter
+    -   id: 0f1416d5-a84f-470e-b64b-1be2ffe92204
+        enabled: true
+        name: request-transformer
+        config:
+            remove:
+                querystring: []
+                headers: []
+                body: []
+            add:
+                querystring: []
+                headers:
+                - X-RPay-Upstream:http://pay-ex-general.sandbox.prod.jp.local:21580
+                body: []
+            http_method: null
+            append:
+                querystring: []
+                headers: []
+                body: []
+            replace:
+                querystring: []
+                headers: []
+                body: []
+                uri: null
+            rename:
+                querystring: []
+                headers: []
+                body: []
+    -   id: 6467c917-7006-4347-ba8c-01e4107ead90
+        enabled: true
+        name: ip-restriction
+        config:
+            allow:
+            - 52.69.64.253
+            - 13.114.2.149
+            - 152.165.81.230
+            - 202.17.150.170
+            deny: null
+    keyauth_credentials:
+    -   key: RPayPro_ISTARIX_test
+-   id: 3693f5b8-534c-4f6c-9072-273cfb3e2e84
+    username: pay_test_gw
+    custom_id: pay_test_gw
+    tags: null
+    plugins:
+    -   id: 5b9e0eec-bfb4-40eb-abb4-4ef9c78bb44c
+        enabled: true
+        name: request-transformer
+        config:
+            remove:
+                querystring: []
+                headers: []
+                body: []
+            add:
+                querystring: []
+                headers:
+                - X-RPay-Upstream:http://stg-arpayexgw101z.stg.jp.local:31080
+                body: []
+            http_method: null
+            append:
+                querystring: []
+                headers: []
+                body: []
+            replace:
+                querystring: []
+                headers: []
+                body: []
+                uri: null
+            rename:
+                querystring: []
+                headers: []
+                body: []
+    -   id: bde85fad-6d08-49f8-88d0-4eddef46c63e
+        enabled: true
+        name: ip-restriction
+        config:
+            allow:
+            - 35.73.79.250
+            - 35.73.79.251
+            deny: null
+    keyauth_credentials:
+    -   key: test_code
+-   id: 500dde70-308c-45e9-8ccd-2aab36375957
+    username: test-client-xxxxx
+    custom_id: test-client-xxxxx
+    tags: null
+    plugins: []
+    keyauth_credentials: []
+-   id: 37a2d026-666b-4d1b-b92c-ae9f2c8adfc2
+    username: test-client-xxxx
+    custom_id: test-client-xxxx
+    tags: null
+    plugins: []
+    keyauth_credentials:
+    -   key: test1
+-   id: 55e3b676-337e-41f4-beec-ed016dcf58f9
+    username: test_auto
+    custom_id: test_auto
+    tags: null
+    plugins: []
+    keyauth_credentials: []
+-   id: 2939d8e9-6ea6-4fbb-a9d0-d588392599e6
+    username: test_IP
+    custom_id: test_IP
+    tags: null
+    plugins:
+    -   id: afb30cb4-e490-41f8-a9e1-8d12c10fc16b
+        enabled: true
+        name: ip-restriction
+        config:
+            allow:
+            - 10.0.0.1
+            deny: []
+    keyauth_credentials: []
+-   id: 17962df6-9deb-46dc-b29a-d44479ed079e
+    username: test-RNDPLAN-7764-4
+    custom_id: test-RNDPLAN-7764-4
+    tags: null
+    plugins: []
+    keyauth_credentials:
+    -   key: RPayPro_TEST
+-   id: c5f91e2b-fa97-4e75-84ff-dddac5a6b098
+    username: test-RNDPLAN-7764-3
+    custom_id: test-RNDPLAN-7764-3
+    tags: null
+    plugins: []
+    keyauth_credentials: []
+-   id: 3bd26cf9-8991-413d-afa2-124b82ca15a5
+    username: test-RNDPLAN-7764-2
+    custom_id: test-RNDPLAN-7764-2
+    tags: null
+    plugins: []
+    keyauth_credentials: []
+-   id: 25b12ec2-9309-44ba-a872-515c5aee72d0
+    username: test-RNDPLAN-7764-1
+    custom_id: test-RNDPLAN-7764-1
+    tags: null
+    plugins:
+    -   id: 8b779d0c-57b0-4842-9127-f196f5389dde
+        enabled: true
+        name: request-transformer
+        config:
+            remove:
+                querystring: []
+                headers: []
+                body: []
+            add:
+                querystring: []
+                headers:
+                - RPay-Upstream:http://test_client_1
+                body: []
+            http_method: null
+            append:
+                querystring: []
+                headers: []
+                body: []
+            replace:
+                querystring: []
+                headers: []
+                body: []
+                uri: null
+            rename:
+                querystring: []
+                headers: []
+                body: []
+    -   id: 012b6787-cdca-42f4-92f5-d3ffe1119319
+        name: request-transformer
+        enabled: true
+        config:
+            remove:
+                querystring: []
+                headers: []
+                body: []
+            add:
+                querystring: []
+                headers:
+                - RPay-Upstream:http://test_route_1
+                body: []
+            http_method: null
+            append:
+                querystring: []
+                headers: []
+                body: []
+            replace:
+                querystring: []
+                headers: []
+                body: []
+                uri: null
+            rename:
+                querystring: []
+                headers: []
+                body: []
+    -   id: 7a226b29-6e48-4ed5-a56b-7e21378e67e6
+        name: request-transformer
+        enabled: true
+        config:
+            remove:
+                querystring: []
+                headers: []
+                body: []
+            add:
+                querystring: []
+                headers:
+                - RPay-Upstream:http://test_route_2
+                body: []
+            http_method: null
+            append:
+                querystring: []
+                headers: []
+                body: []
+            replace:
+                querystring: []
+                headers: []
+                body: []
+                uri: null
+            rename:
+                querystring: []
+                headers: []
+                body: []
+    keyauth_credentials: []
+-   id: b690a303-b07f-4e3f-a738-6ae067060045
+    username: test_GW11
+    custom_id: test_GW11
+    tags: null
+    plugins: []
+    keyauth_credentials: []
+-   id: 2dba7029-c643-44d9-a07a-d2454a9463e9
+    username: test_client_01
+    custom_id: test_client_01
+    tags: null
+    plugins: []
+    keyauth_credentials: []
+-   id: ec7e35a6-50d3-4423-87e6-9c8994adb36e
+    username: unbreakable_test
+    custom_id: unbreakable_test
+    tags: null
+    plugins:
+    -   id: 83b27127-9aef-4ae9-9b5f-1a575209ac18
+        enabled: true
+        name: request-transformer
+        config:
+            remove:
+                querystring: []
+                headers: []
+                body: []
+            add:
+                querystring: []
+                headers:
+                - X-RPay-Upstream:http://generic-upstream.com
+                body: []
+            http_method: null
+            append:
+                querystring: []
+                headers: []
+                body: []
+            replace:
+                querystring: []
+                headers: []
+                body: []
+                uri: null
+            rename:
+                querystring: []
+                headers: []
+                body: []
+    -   id: 0b5bc666-b015-422d-842b-e3b78b130f3f
+        name: request-transformer
+        enabled: true
+        config:
+            remove:
+                querystring: []
+                headers: []
+                body: []
+            add:
+                querystring: []
+                headers:
+                - X-RPay-Upstream:http://specific-upstream.com
+                body: []
+            http_method: null
+            append:
+                querystring: []
+                headers: []
+                body: []
+            replace:
+                querystring: []
+                headers: []
+                body: []
+                uri: null
+            rename:
+                querystring: []
+                headers: []
+                body: []
+    keyauth_credentials:
+    -   key: UNBREAKABLE
+-   id: 4910b474-1290-42b5-a6b9-79ca9fb88d09
+    username: apic_config
+    custom_id: apic_config
+    tags: null
+    plugins: []
+    keyauth_credentials: []
+-   id: 4df42197-9d57-4c45-a671-8934ba27782b
+    username: client_paydevs
+    custom_id: client_paydevs
+    tags: null
+    plugins:
+    -   id: b9273771-744c-4425-9939-af9cc13a214a
+        enabled: true
+        name: correlation-id
+        config:
+            echo_downstream: true
+            header_name: Kong-Request-ID
+            generator: uuid
+    -   id: e48f48d9-8be1-4a85-8bca-0f5d84406e11
+        enabled: true
+        name: request-transformer
+        config:
+            remove:
+                querystring: []
+                headers: []
+                body: []
+            add:
+                querystring: []
+                headers:
+                - RPay-Upstream:http://stg-arpayexgw101z.stg.jp.local:31080
+                body: []
+            http_method: null
+            append:
+                querystring: []
+                headers: []
+                body: []
+            replace:
+                querystring: []
+                headers: []
+                body: []
+                uri: null
+            rename:
+                querystring: []
+                headers: []
+                body: []
+    keyauth_credentials:
+    -   key: GW001
+    -   key: TEST
+    -   key: STG1025090
+    -   key: STG0000005

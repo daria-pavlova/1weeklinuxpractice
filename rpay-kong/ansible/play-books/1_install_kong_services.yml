@@ -1,0 +1,51 @@
+---
+- name: Install Kong
+  hosts: all
+  serial: 1
+  become: true
+  tasks:   
+    - name: Create kong service
+      ansible.builtin.template:
+        src: "{{ playbook_dir }}/file/kong.service.j2"
+        dest: /etc/systemd/system/kong-{{ service }}-{{ color }}.service
+        
+    - name: Reload systemd daemon
+      systemd:
+        daemon_reload: yes
+
+    - name: Create path to kong.conf
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: 0644 
+        owner: kong 
+        group: kong
+      loop:
+      - /etc/kong/{{ service }}/{{ color }}
+
+    - name: Copy custom-configuration to kong.conf
+      ansible.builtin.template:
+        src: "{{ playbook_dir }}/file/kong.conf.j2"
+        dest: /etc/kong/{{ service }}/{{ color }}/kong.conf
+        remote_src: yes
+        mode: 0644 
+        owner: kong 
+        group: kong
+
+    - name: Copy custom configuration to kong.yaml
+      ansible.builtin.template: 
+        src: "{{ playbook_dir }}/file/kong.yaml.ini"
+        dest: /etc/kong/{{ service }}/{{ color }}/kong.yaml
+        mode: 0664 
+        owner: kong 
+        group: kong
+
+    - name: Start Kong service
+      systemd:
+        name: kong-{{ service }}-{{ color }}.service
+        state: started
+        enabled: yes
+      register: kong_status
+    - name: Print kong-{{ service }}-{{ color }}.service status
+      debug:
+        msg: "kong-{{ service }}-{{ color }}.service is {{ 'running' if kong_status.changed else 'stopped' }}"

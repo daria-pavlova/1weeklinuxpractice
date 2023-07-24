@@ -1,0 +1,37 @@
+---
+- name: Install Kong
+  hosts: installhost
+  serial: 1
+  become: true
+  tasks:
+    # - name: Add repo
+    #   ansible.builtin.apt_repository:
+    #     repo: deb https://download.konghq.com/gateway-3.x-ubuntu-focal/ default all
+    #     state: absent 
+
+    - name: Download Kong package
+      shell: curl -Lo kong-{{ kong_version }}.amd64.deb "https://download.konghq.com/gateway-3.x-ubuntu-$(lsb_release -sc)/pool/all/k/kong/kong_{{ kong_version }}_amd64.deb"
+      args:
+        chdir: /tmp
+      environment: 
+        https_proxy: http://pkg.proxy.prod.jp.local:10080
+        no_proxy: jpe2b-repo.bmaas.jpe2b.dcnw.rakuten,localhost,stg-kong-101.rpay-dev.jpe2b.dcnw.rakuten,gitlab-payment.intra.rakuten-it.com
+        http_proxy: http://pkg.proxy.prod.jp.local:10080
+
+    - name: Install Kong package
+      apt:
+        deb: /tmp/kong-{{ kong_version }}.amd64.deb
+        state: present
+
+    - name: Hold kong
+      ansible.builtin.dpkg_selections:
+        name: kong
+        selection: hold
+
+    - name: Disable default Kong on boot
+      systemd:
+        name: kong
+        enabled: no
+        state: stopped
+
+

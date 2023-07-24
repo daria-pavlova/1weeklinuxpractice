@@ -1,0 +1,11 @@
+prefix = /usr/local/kong/{{service}}/{{ color }}
+database = {{ database }} 
+proxy_ssl_enabled = {{ proxy_ssl_enabled }}
+#plugins = bundled
+proxy_listen = 127.0.0.1:{{ kong_port }} reuseport backlog={{ backlog_size }}
+stream_listen = {{ stream_listen }}
+admin_listen = 127.0.0.1:{{ kong_admin_port }} reuseport backlog={{ backlog_size }}
+status_listen = 127.0.0.1:{{ kong_status_port }}
+mem_cache_size = {{ mem_cache_size }}
+headers = {{ headers }}
+declarative_config =  /etc/kong/{{ service }}/{{ color }}/kong.yaml

@@ -1,0 +1,164 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "${DEPLOYMENT_NAME}"
+  labels:
+    app: "${DEPLOYMENT_NAME}"
+    env: "${ENV}"
+  annotations:
+    updated: "${TIMESTAMP}"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "${DEPLOYMENT_NAME}"
+      env: "${ENV}"
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  template:
+    metadata:
+      labels:
+        app: "${DEPLOYMENT_NAME}"
+        env: "${ENV}"
+    spec:
+      containers:
+      - name: "proxy"
+        image: "${DOCKER_KONG_IMAGE}"
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: KONG_ADMIN_ACCESS_LOG
+          value: "/dev/stdout"
+        - name: KONG_DECLARATIVE_CONFIG
+          value: ${K8S_KONG_CONFIG_YAML_DESTINATION}
+        - name: KONG_ADMIN_ERROR_LOG
+          value: "/dev/stderr"
+        - name: KONG_ADMIN_GUI_ACCESS_LOG
+          value: "/dev/stdout"
+        - name: KONG_ADMIN_GUI_ERROR_LOG
+          value: "/dev/stderr"
+        - name: KONG_ADMIN_LISTEN
+          value: "0.0.0.0:8001, 0.0.0.0:8444 ssl"
+        - name: KONG_CLUSTER_LISTEN
+          value: "off"
+        - name: KONG_DATABASE
+          value: "off"
+        - name: KONG_PORTAL_API_ACCESS_LOG
+          value: "/dev/stdout"
+        - name: KONG_PORTAL_API_ERROR_LOG
+          value: "/dev/stderr"
+        - name: KONG_PORT_MAPS
+          value: "80:8000, 443:8443"
+        - name: KONG_PROXY_ACCESS_LOG
+          value: "/dev/stdout"
+        - name: KONG_PROXY_ERROR_LOG
+          value: "/dev/stderr"
+        - name: KONG_PROXY_LISTEN
+          value: "0.0.0.0:8000, 0.0.0.0:8443 http2 ssl"
+        - name: KONG_PROXY_STREAM_ACCESS_LOG
+          value: "/dev/stdout basic"
+        - name: KONG_PROXY_STREAM_ERROR_LOG
+          value: "/dev/stderr"
+        - name: KONG_ROUTER_FLAVOR
+          value: "traditional"
+        - name: KONG_STATUS_ACCESS_LOG
+          value: "off"
+        - name: KONG_STATUS_ERROR_LOG
+          value: "/dev/stderr"
+        - name: KONG_STATUS_LISTEN
+          value: "0.0.0.0:8100"
+        - name: KONG_STREAM_LISTEN
+          value: "off"
+        - name: KONG_NGINX_DAEMON
+          value: "off"
+        - name: KONG_HEADERS
+          value: 'off'
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - kong
+              - quit
+              - --wait=15
+        ports:
+        - name: proxy
+          containerPort: 8000
+          protocol: TCP
+        - name: status
+          containerPort: 8100
+          protocol: TCP
+        - name: metrics
+          containerPort: 8001
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /status
+            port: status
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /status
+            port: status
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        resources:
+          limits:
+            cpu: 1
+            memory: 2G
+          requests:
+            cpu: 1
+            memory: 2G
+        volumeMounts:
+        - name: config
+          mountPath: "${K8S_KONG_CONFIG_YAML_DESTINATION_DIR}"
+          readOnly: true
+      volumes:
+      - name: config
+        configMap:
+          name: kong-config-${ENV}-${VERSION}
+      restartPolicy: Always
+---
+#  for scrpting metrics to managed prometheus
+apiVersion: monitoring.googleapis.com/v1
+kind: PodMonitoring
+metadata:
+  generation: 1
+  name: "${DEPLOYMENT_NAME}"
+  namespace: rpay-kong
+spec:
+  endpoints:
+  - interval: 30s
+    path: /metrics
+    port: 8001
+  selector:
+    matchLabels:
+      app: "${DEPLOYMENT_NAME}"
+  targetLabels:
+    metadata:
+    - pod
+    - container
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: ${DEPLOYMENT_NAME}
+  labels:
+    app.kubernetes.io/name: ${DEPLOYMENT_NAME}
+    env: ${ENV}
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ${DEPLOYMENT_NAME}
+      env: ${ENV}

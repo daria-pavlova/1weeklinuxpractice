@@ -1,0 +1,86 @@
+---
+- name: Install Filebeat RPay
+  hosts: installhost
+  become: true
+  tasks:
+
+    # - name: Set proxy environment variables
+    #   become: yes
+    #   command: echo "export {{ item }}" 
+    #   with_items:
+    #     - "no_proxy=jpe2b-repo.bmaas.jpe2b.dcnw.rakuten,localhost,stg-kong-101.rpay-dev.jpe2b.dcnw.rakuten"
+    #     - "https_proxy=http://pkg.proxy.prod.jp.local:10080"
+    #     - "http_proxy=http://pkg.proxy.prod.jp.local:10080"
+
+    - name: Download and install Public Signing Key
+      become: yes
+      shell: wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+
+    - name: Install apt-transport-https package
+      become: yes
+      apt:
+        name: apt-transport-https
+        state: present
+
+    - name: Save repository definition to elastic-8.x.list
+      become: yes
+      shell: echo "deb https://artifacts.elastic.co/packages/8.x/apt stable main" | sudo tee /etc/apt/sources.list.d/elastic-8.x.list
+      
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+      ignore_errors: yes
+      environment:
+        https_proxy: http://pkg.proxy.prod.jp.local:10080
+        no_proxy: jpe2b-repo.bmaas.jpe2b.dcnw.rakuten,localhost,stg-kong-101.rpay-dev.jpe2b.dcnw.rakuten
+        http_proxy: http://pkg.proxy.prod.jp.local:10080
+
+    - name: Install Filebeat
+      apt:
+        name: filebeat={{ filebeat_version }}
+        state: present
+      environment: 
+        https_proxy: http://pkg.proxy.prod.jp.local:10080
+        no_proxy: jpe2b-repo.bmaas.jpe2b.dcnw.rakuten,localhost,stg-kong-101.rpay-dev.jpe2b.dcnw.rakuten
+        http_proxy: http://pkg.proxy.prod.jp.local:10080
+
+    - name: Hold filebeat
+      ansible.builtin.dpkg_selections:
+        name: filebeat
+        selection: hold
+
+    - name: Disable default Filebeat on boot
+      ansible.builtin.dpkg_selections:
+        name: filebeat
+        selection: hold
+
+    - name: Create path /etc/filebeat/{{ service }}/
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: 0644 
+        owner: bdd-filebeat 
+        group: bdd-filebeat
+      loop:
+      - /etc/filebeat/{{ service }}/
+
+    - name: Create filebeat service
+      ansible.builtin.template:
+        src: "{{ playbook_dir }}/file/filebeat.service.ini"
+        dest: /etc/systemd/system/filebeat-{{ service }}.service
+
+    - name: Copy {{ service }} filebeat conf
+      ansible.builtin.template:
+        src: "{{ playbook_dir }}/file/filebeat.yml.ini"
+        dest: /etc/filebeat/{{ service }}/filebeat.yml
+        remote_src: yes
+
+    - name: Reload systemd daemon
+      systemd:
+        daemon_reload: yes
+
+    - name: Start filebeat-{{ service }}.service
+      service:
+        name: filebeat-{{ service }}.service
+        state: started
+        enabled: true

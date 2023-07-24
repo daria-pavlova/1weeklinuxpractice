@@ -1,0 +1,35 @@
+# svc for port 3000
+# Path: gcp/stg/jpe/caas/metric-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: ${ENV}-metric-svc
+  namespace: rpay-kong
+spec:
+  ports:
+  - port: 3000
+    protocol: TCP
+    targetPort: 8001
+  selector:
+    app: "${DEPLOYMENT_NAME}"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "${DEPLOYMENT_NAME}"
+  namespace: rpay-kong
+  labels:
+    app: "${DEPLOYMENT_NAME}"
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
+    cloud.google.com/app-protocols: '{"http": "HTTP"}'
+    cloud.google.com/backend-config: '{"ports": {"8000":""${DEPLOYMENT_NAME}""}}'
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8000
+    targetPort: 8000
+    protocol: TCP
+    name: http
+  selector:
+    app: "${DEPLOYMENT_NAME}"

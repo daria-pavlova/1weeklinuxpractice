@@ -1,0 +1,74 @@
+---
+- name: Install Haproxy RPay
+  hosts: installhost
+  become: true
+  tasks:
+    - name: Check if the repository line exists in the sources.list file
+      shell: grep -q "ppa.launchpad.ne" /etc/apt/sources.list
+      register: repo_exists
+      changed_when: false
+      ignore_errors: yes
+
+    - name: Add the repository line to sources.list if it doesn't exist
+      block:
+        - name: Add the repository line
+          shell: echo "deb http://ppa.launchpad.net/vbernat/haproxy-2.6/ubuntu focal main" | sudo tee -a /etc/apt/sources.list
+          when: repo_exists.rc != 0
+      when: repo_exists is not defined or repo_exists.rc != 0
+
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+      ignore_errors: yes
+
+    - name: Install HAProxy
+      apt:
+        name: haproxy={{ haproxy_version }}
+        state: present
+
+    - name: Hold haproxy
+      ansible.builtin.dpkg_selections:
+        name: haproxy
+        selection: hold
+
+    - name: Disable default Haproxy on boot
+      systemd:
+        name: haproxy
+        enabled: no
+        state: stopped
+      become: true
+
+    - name: Create haproxy service
+      ansible.builtin.template:
+        src: "{{ playbook_dir }}/file/haproxy.service.ini"
+        dest: /etc/systemd/system/haproxy-{{ service }}.service
+
+    - name: Reload systemd daemon
+      systemd:
+        daemon_reload: yes
+
+    - name: Create path /etc/haproxy/{{ service }}/
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: 0644 
+        owner: haproxy 
+        group: haproxy
+      loop:
+      - /etc/haproxy/{{ service }}/
+      - /run/{{ service }}/
+
+    - name: Copy {{ service }} haproxy conf
+      ansible.builtin.template:
+        src: "{{ playbook_dir }}/file/haproxy-{{ color }}.cfg.ini"
+        dest: /etc/haproxy/{{ service }}/haproxy.cfg
+        remote_src: yes
+        mode: 0644 
+        owner: haproxy 
+        group: haproxy
+
+    - name: Start haproxy-{{ service }}.service
+      service:
+        name: haproxy-{{ service }}.service
+        state: started
+    

@@ -1,0 +1,168 @@
+- name: Update kong.yaml configuration
+  hosts: "{{ color }}"
+  serial: 1
+  become: true
+  tasks:
+    - name: Check current deployment
+      block: 
+      - name: Run grep command
+        command: "grep -r 'default_backend' /etc/haproxy/{{ service }}/haproxy.cfg"
+        register: grep_output
+      - name: Extract deployment from grep output
+        set_fact:
+          deployment: "{{ grep_output.stdout_lines[0].split(' ')[-1] }}"
+      - name: Show the current deployment
+        fail: 
+          msg: "The LIVE deployment is {{ deployment }}, you're running the script to deploy {{ color }}."
+        when: deployment == color
+      - name: Show the current deployment
+        debug: 
+          msg: "The LIVE deployment is {{ deployment }}, you're running the script to deploy {{ color }}."
+        when: deployment != color
+      tags: check-deploy
+
+    - debug:
+        msg: "kong.yaml file -> /etc/kong/{{ service }}/{{ color }}/kong.yaml"
+    - debug:
+        msg: "backup of kong.yaml file -> {{ kong_backup }}"
+      tags: copy-kong
+    - debug:
+        msg: "new kong.yaml file -> {{ kong_new }}"
+      tags: copy-kong
+
+    - name: Copy kong.yaml
+      template: 
+        src: "{{ playbook_dir }}/../{{ env }}/{{ color }}/kong.yaml.ini"
+        dest: "{{ kong_new }}"
+      tags: copy-kong
+
+    - name: Verify new kong.yaml config
+      command: kong config parse -c /etc/kong/{{ service }}/{{ color }}/kong.conf "{{ kong_new }}" && \
+               kong check "{{ kong_new }}"
+      ignore_errors: true
+      register: verify_result
+      tags: verify
+      
+    - name: Check if verification failed
+      set_fact:
+        verification_failed: "{{ verify_result.rc != 0 }}"
+      tags: verify
+
+    - name: Diff kong.yaml
+      shell: diff -u {{ kong_new }} /etc/kong/{{ service }}/{{ color }}/kong.yaml
+      tags: diff-kong
+      register: diff_output
+      ignore_errors: true
+    - name: Handle Diff Result
+      debug:
+        msg: |
+          {% if diff_output.rc == 0 %}
+          Files are identical
+          {% else %}
+          Files differ
+          {{ diff_output.stdout }}
+          {% endif %}
+    - name: Print output
+      debug:
+        var: diff_output.stdout_lines
+      tags: diff-kong
+    - name: Fail if there are no differences
+      fail:
+        msg: "There are no differences between {{ playbook_dir }}/../{{ env }}/{{ color }}/kong.yaml and {{ kong_backup }}"
+      when: diff_output.stdout_lines is defined and diff_output.stdout_lines | length == 0
+      failed_when: false
+      tags: diff-kong
+
+    - name: Get the source file of the current Kong configuration
+      command: readlink -f /etc/kong/{{ service }}/{{ color }}/kong.yaml
+      register: source_file_result
+      tags: update
+    - name: Create a backup symlink
+      file:
+        src: "{{ source_file_result.stdout }}"
+        dest: "{{ kong_backup }}"
+        state: link
+        force: yes
+      tags: update
+
+    - name: Restart kong-{{ service }}-{{ color }}.service
+      systemd:
+        name: kong-{{ service }}-{{ color }}.service
+        state: restarted
+      register: kong_status
+      tags: update
+
+    - name: Create a current symlink
+      file:
+        src: "{{ kong_new }}"
+        dest: /etc/kong/{{ service }}/{{ color }}/kong.yaml
+        state: link
+        force: yes
+      tags: update
+
+    - name: Send HTTP request to Kong
+      uri:
+        url: "{{ endpoint }}:{{ kong_admin_port }}"
+        return_content: no
+        method: GET
+        status_code: [200]
+      register: response
+      tags: switch
+
+    - name: Copy {{ service }} haproxy {{ color }} conf
+      ansible.builtin.template:
+        src: "{{ playbook_dir }}/file/haproxy-{{ color }}.cfg.ini"
+        dest: /etc/haproxy/{{ service }}/haproxy.cfg
+        remote_src: yes
+        mode: 0644 
+        owner: haproxy 
+        group: haproxy
+      tags: switch
+
+
+    - name: Restart haproxy-{{ service }}.service
+      systemd:
+        name: haproxy-{{ service }}.service
+        state: reloaded
+      register: haproxy_status
+      tags: switch
+
+    - name: Print haproxy {{service}} status
+      debug:
+        msg: "HAProxy is {{ 'running' if haproxy_status.changed else 'stopped' }}"
+      tags: switch
+
+    - name: Send HTTP request to Kong
+      uri:
+        url: "{{ endpoint }}:{{ haproxy_port }}"
+        return_content: no
+        method: GET
+        status_code: [404, 200]
+      register: response
+      ignore_errors: true
+      tags: check-kong
+
+    # - name: Print Kong status
+    #   debug:
+    #     msg: >
+    #       {% if response.status == 200 || response.status == 404 %}
+    #         Kong is up and running!
+    #       {% else %}
+    #         Kong returned a {{ response.status }} status code.
+    #       {% endif %}
+    #   tags: check-kong
+
+##Rollback
+
+    - name: Get the source file of the backup Kong configuration
+      command: readlink -f {{ kong_backup }}
+      register: source_file_result
+      tags: rollback
+    - name: Create symlink to kong.yaml
+      file:
+        src: "{{ source_file_result.stdout }}"
+        dest: /etc/kong/{{ service }}/{{ color }}/kong.yaml
+        state: link
+        force: yes
+      tags: rollback
+      
